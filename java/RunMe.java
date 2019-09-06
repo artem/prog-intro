@@ -113,7 +113,7 @@ public class RunMe {
 
 
     private static void key7(final byte[] data) {
-        // Count the number of occurrences of the most frequent word at this following page:
+        // Count the number of occurrences of the most frequent noun at this following page:
         // https://docs.oracle.com/javase/specs/jls/se11/html/jls-4.html
         int result = 0;
         if (result != 0) {
@@ -122,7 +122,7 @@ public class RunMe {
     }
 
 
-    private static final String PATTERN = "Hello, World!";
+    private static final String PATTERN = "Hello, World! Привет, Мир!";
     private static final int SMALL_REPEAT_COUNT = 10_000_000;
 
     private static void key8(final byte[] data) {
@@ -135,12 +135,12 @@ public class RunMe {
     }
 
 
-    private static final long LARGE_REPEAT_SHIFT = 10;
-    private static final long LARGE_REPEAT_COUNT = 1 << LARGE_REPEAT_SHIFT;
+    private static final long LARGE_REPEAT_SHIFT = 27;
+    private static final long LARGE_REPEAT_COUNT = 1L << LARGE_REPEAT_SHIFT;
 
     private static void key9(final byte[] data) {
         String repeated = "";
-        for (int i = 0; i < LARGE_REPEAT_COUNT; i++) {
+        for (long i = 0; i < LARGE_REPEAT_COUNT; i++) {
             repeated += PATTERN;
         }
 
