@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -5,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * Run this code with provided arguments.
@@ -22,7 +24,6 @@ public class RunMe {
         System.out.println("The first key was low-hanging fruit, can you found others?");
         System.out.println("Try to modify some code in keyX(...) functions");
 
-        key1(data.clone());
         key2(data.clone());
         key3(data.clone());
         key4(data.clone());
@@ -32,6 +33,9 @@ public class RunMe {
         key8(data.clone());
         key9(data.clone());
         key10(data.clone());
+        key11(data.clone());
+        key12(data.clone());
+        key13(data.clone());
     }
 
     private static void key0(final byte[] data) {
@@ -150,6 +154,50 @@ public class RunMe {
 
     private static void key10(final byte[] data) {
         print(10, 4508604576084534553L, data);
+    }
+
+
+    private static void key11(final byte[] data) {
+        final BigInteger year = BigInteger.valueOf(-2019);
+        final BigInteger prime = BigInteger.valueOf(PRIME);
+
+        long result = Stream.iterate(BigInteger.ZERO, BigInteger.ONE::add)
+                .filter(i -> year.multiply(i).add(prime).multiply(i).compareTo(BigInteger.ZERO) > 0)
+                .mapToLong(i -> i.longValue() * data[i.intValue() % data.length])
+                .sum();
+
+        print(11, result, data);
+    }
+
+
+    private static final long MAX_DEPTH = 10_000_000L;
+
+    private static void key12(final byte[] data) {
+        try {
+            key12(data, 0, 0);
+        } catch (StackOverflowError soe) {
+            System.err.println("Stack overflow :(");
+        }
+    }
+
+    private static void key12(final byte[] data, long depth, long result) {
+        if (depth < MAX_DEPTH) {
+            key12(data, depth + 1, (result ^ 5487) + depth * 11);
+        } else {
+            print(12, result, data);
+        }
+    }
+
+
+    private static void key13(final byte[] data) {
+        final BigInteger secondsInDay = BigInteger.valueOf(60 * 60 * 24);
+
+        long result = Stream.iterate(BigInteger.ZERO, BigInteger.ONE::add)
+                .map(secondsInDay::multiply)
+                .collect(Collectors.reducing(BigInteger.ZERO, BigInteger::add))
+                .longValue();
+
+        print(13, result, data);
     }
 
     // ---------------------------------------------------------------------------------------------------------------
