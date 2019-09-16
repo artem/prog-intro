@@ -1,2 +1,2 @@
-javac artifacts/sum/Sum.java
+javac Sum.java
 java -jar artifacts/sum/SumTest.jar
