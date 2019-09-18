@@ -3,6 +3,16 @@
 [Условия домашних заданий](http://www.kgeorgiy.info/courses/prog-intro/homeworks.html)
 
 
+## Домашнее задание 3. Реверс
+
+Исходный код тестов:
+
+* [ReverseTest.java](java/reverse/ReverseTest.java)
+* [ReverseChecker.java](java/reverse/ReverseChecker.java)
+
+Откомпилированные тесты: [ReverseTest.jar](artifacts/reverse/ReverseTest.jar)
+
+
 ## Домашнее задание 2. Сумма чисел
 
 Модификации
@@ -11,6 +21,11 @@
     * Класс должен иметь имя `SumLong`
     * [Исходный код тестов](java/sum/SumLongTest.java)
     * [Откомпилированные тесты](artifacts/sum/SumLongTest.jar)
+ * *Hex*
+    * Шестнадцатеричные числа имеют префикс `0x`
+    * Класс должен иметь имя `SumHex`
+    * [Исходный код тестов](java/sum/SumHexTest.java)
+    * [Откомпилированные тесты](artifacts/sum/SumHexTest.jar)
 
 Для того, чтобы протестировать исходную программу:
 
