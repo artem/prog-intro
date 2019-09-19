@@ -7,6 +7,8 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Georgiy Korneev (kgeorgiy@kgeorgiy.info)
@@ -28,8 +30,12 @@ public class MainChecker extends Randomized {
     }
 
     public List<String> run(final String... input) {
+        return runComment(Stream.of(input).collect(Collectors.joining("\" \"", "\"", "\"")), input);
+    }
+
+    public List<String> runComment(final String comment, final String... input) {
         counter.nextTest();
-        System.err.format("Running test %02d: java %s \"%s\"\n", counter.getTest(), method.getDeclaringClass().getName(), join(input));
+        System.err.format("Running test %02d: java %s %s\n", counter.getTest(), method.getDeclaringClass().getName(), comment);
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream oldOut = System.out;
         try {
@@ -54,17 +60,6 @@ public class MainChecker extends Randomized {
         } finally {
             System.setOut(oldOut);
         }
-    }
-
-    private String join(final String[] input) {
-        final StringBuilder sb = new StringBuilder();
-        for (final String s : input) {
-            if (sb.length() > 0) {
-                sb.append("\" \"");
-            }
-            sb.append(s);
-        }
-        return sb.toString();
     }
 
     public void checkEquals(final List<String> expected, final List<String> actual) {
