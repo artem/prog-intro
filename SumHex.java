@@ -1,5 +1,3 @@
-import java.util.*;
-
 public class SumHex {
     public static void main(String[] args) {
         int ans = 0;
@@ -10,7 +8,7 @@ public class SumHex {
                 while (j < arg.length() && !Character.isWhitespace(arg.charAt(j))) {
                     j++;
                 }
-                
+
                 if (idxStart < j) {
                     String number = arg.substring(idxStart, j);
 

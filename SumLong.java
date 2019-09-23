@@ -1,5 +1,3 @@
-import java.util.*;
-
 public class SumLong {
     public static void main(String[] args) {
         long ans = 0;
@@ -10,7 +8,7 @@ public class SumLong {
                 while (j < arg.length() && !Character.isWhitespace(arg.charAt(j))) {
                     j++;
                 }
-                
+
                 if (idxStart < j) {
                     ans += Long.parseLong(arg.substring(idxStart, j));
                 }
