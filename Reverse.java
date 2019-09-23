@@ -4,9 +4,6 @@ public class Reverse {
     public static int[] StringArrToIntArr(String[] s) {
         int[] result = new int[s.length];
         for (int i = 0; i < s.length; i++) {
-            if (s[i].equals("")) {
-                return new int[0];
-            }
             result[i] = Integer.parseInt(s[i]);
         }
         return result;
@@ -17,9 +14,14 @@ public class Reverse {
         ArrayList<int[]> numbers = new ArrayList<>();
 
         while (sc.hasNextLine()) {
+            int[] numsInLine;
             String curLine = sc.nextLine();
-            int[] numsInLine = StringArrToIntArr(curLine.split(" "));
-            //String[] numsInLine = curLine.split(" ");
+            if (!curLine.isEmpty()) {
+                numsInLine = StringArrToIntArr(curLine.split(" "));
+            } else {
+                numsInLine = new int[0];
+            }
+
             numbers.add(numsInLine);
         }
 
