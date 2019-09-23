@@ -1,32 +1,33 @@
 import java.util.*;
 
 public class Reverse {
-    public static ArrayList<Integer> StringToIntArr(String s) {
-        Scanner sc = new Scanner(s);
-        ArrayList<Integer> result = new ArrayList<>();
-
-        while (sc.hasNext()) {
-            result.add(Integer.parseInt(sc.next()));
+    public static int[] StringArrToIntArr(String[] s) {
+        int[] result = new int[s.length];
+        for (int i = 0; i < s.length; i++) {
+            result[i] = Integer.parseInt(s[i]);
         }
-
         return result;
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        ArrayList<ArrayList<Integer>> numbers = new ArrayList<>();
+        ArrayList<int[]> numbers = new ArrayList<>();
 
         while (sc.hasNextLine()) {
-            ArrayList<Integer> numsInLine;
+            int[] numsInLine;
             String curLine = sc.nextLine();
+            if (!curLine.isEmpty()) {
+                numsInLine = StringArrToIntArr(curLine.split(" "));
+            } else {
+                numsInLine = new int[0];
+            }
 
-            numsInLine = StringToIntArr(curLine);
             numbers.add(numsInLine);
         }
 
         for (int i = numbers.size() - 1; i >= 0; i--) {
-            for (int j = numbers.get(i).size() - 1; j >= 0; j--) {
-                System.out.print(numbers.get(i).get(j) + " ");
+            for (int j = numbers.get(i).length - 1; j >= 0; j--) {
+                System.out.print(numbers.get(i)[j] + " ");
             }
             System.out.println();
         }
