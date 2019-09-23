@@ -5,16 +5,15 @@ public class SumLong {
         long ans = 0;
 
         for (String arg : args) {
-            String[] parse;
-            arg = arg.strip();
-
-            if (arg.isBlank())
-                continue;
-
-            parse = arg.split("\\p{javaWhitespace}+");
-
-            for (int j = 0; j < parse.length; j++) {
-                ans += Long.parseLong(parse[j]);
+            for (int j = 0; j < arg.length(); j++) {
+                int idxStart = j;
+                while (j < arg.length() && !Character.isWhitespace(arg.charAt(j))) {
+                    j++;
+                }
+                
+                if (idxStart < j) {
+                    ans += Long.parseLong(arg.substring(idxStart, j));
+                }
             }
         }
         System.out.println(ans);
