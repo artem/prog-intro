@@ -1,17 +1,13 @@
-import java.util.Arrays;
+import java.util.*;
 
 public class SumLong {
     public static void main(String[] args) {
         long ans = 0;
 
         for (int i = 0; i < args.length; i++) {
-            String[] parse = args[i].split("\\p{javaWhitespace}+");
-            //System.err.println(Arrays.toString(parse) + parse.length);
-            for (int j = 0; j < parse.length; j++) {
-                if (parse[j].isEmpty()) {
-                    continue;
-                }
-                ans += Long.parseLong(parse[j]);
+            Scanner sc = new Scanner(args[i]);
+            while (sc.hasNext()) {
+                ans += Long.parseLong(sc.next()); // Можно было sc.nextLong(), но работает медленнее
             }
         }
         System.out.println(ans);
