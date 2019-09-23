@@ -1,28 +1,27 @@
 import java.util.*;
 
 public class ReverseEven {
-    public static int[] stringArrToIntArr(String[] s) {
-        int[] result = new int[s.length];
-        for (int i = 0; i < s.length; i++) {
-            result[i] = Integer.parseInt(s[i]);
+    public static int[] stringToIntArr(String s, int[] buffer) {
+        Scanner sc = new Scanner(s);
+        int size = 0;
+
+        while (sc.hasNextInt()) {
+            buffer[size++] = sc.nextInt();
         }
-        return result;
+        return Arrays.copyOf(buffer, size);
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int[][] numbers = new int[1_000_000][];
+        int[] buffer = new int[1_000_000];
         int size = 0;
 
         while (sc.hasNextLine()) {
             int[] numsInLine;
             String curLine = sc.nextLine();
-            if (!curLine.isEmpty()) {
-                numsInLine = stringArrToIntArr(curLine.split(" ")); // работает быстрее, чем Scanner и Scanner.nextInt() !
-            } else {
-                numsInLine = new int[0];
-            }
 
+            numsInLine = stringToIntArr(curLine, buffer);
             numbers[size++]= numsInLine;
         }
 
