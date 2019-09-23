@@ -5,6 +5,13 @@
 
 ## Домашнее задание 3. Реверс
 
+Модификации:
+ * *Even*
+    * Выведите только четные числа (в реверсивном порядке)
+    * Класс должен иметь имя `ReverseEven`
+    * [Исходный код тестов](java/reverse/ReverseEvenTest.java)
+    * [Откомпилированные тесты](artifacts/reverse/ReverseEvenTest.jar)
+
 Исходный код тестов:
 
 * [ReverseTest.java](java/reverse/ReverseTest.java)
