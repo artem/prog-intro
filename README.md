@@ -31,6 +31,12 @@
     * Класс должен иметь имя `SumDouble`
     * [Исходный код тестов](java/sum/SumDoubleTest.java)
     * [Откомпилированные тесты](artifacts/sum/SumDoubleTest.jar)
+ * *LongHex*
+    * Входные данные являются 64-битными целыми числами
+    * Шестнадцатеричные числа имеют префикс `0x`
+    * Класс должен иметь имя `SumLongHex`
+    * [Исходный код тестов](java/sum/SumLongHexTest.java)
+    * [Откомпилированные тесты](artifacts/sum/SumLongHexTest.jar)
 
 Для того, чтобы протестировать исходную программу:
 
