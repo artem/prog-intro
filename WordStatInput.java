@@ -9,23 +9,22 @@ public class WordStatInput {
         return isLetter || isDash || isApostrophe;
     }
 
-    private static void addToStats(String word, String[] list, int[] occurences) {
-        int idx = 0;
-        while (idx < list.length && list[idx] != null) {
-            if (list[idx].equals(word)) {
-                occurences[idx]++;
-                return;
-            }
-            idx++;
+    private static void addToStats(String word, ArrayList<String> list, ArrayList<Integer> occurences) {
+        int pos = list.indexOf(word);
+
+        if (pos != -1) {
+            occurences.set(pos, occurences.get(pos) + 1);
+            return;
         }
-        list[idx] = word;
-        occurences[idx]++;
+
+        list.add(word);
+        occurences.add(1);
+        return;
     }
 
     public static void main(String[] args) {
-        String[] words = new String[1_000_000];
-        int[] wordOccurs = new int[1_000_000]; 
-        int statSize = 0;
+        ArrayList<String> words = new ArrayList<>();
+        ArrayList<Integer> wordOccurs = new ArrayList<>();
 
         if (args.length != 2) {
             System.err.println("Usage: Word <input file> <output file>");
@@ -65,10 +64,8 @@ public class WordStatInput {
         try {
             PrintWriter writer = new PrintWriter(new FileOutputStream(args[1]));
             try {
-                int idx = 0;
-                while (words[idx] != null) {
-                    writer.println(words[idx] + ' ' + wordOccurs[idx]);
-                    idx++;
+                for (int i = 0; i < words.size(); i++) {
+                    writer.println(words.get(i) + ' ' + wordOccurs.get(i));
                 }
             } finally {
                 writer.close();
