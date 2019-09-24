@@ -3,6 +3,17 @@
 [Условия домашних заданий](http://www.kgeorgiy.info/courses/prog-intro/homeworks.html)
 
 
+Домашнее задание 4. Подсчет слов
+----
+
+Исходный код тестов:
+
+* [WordStatInputTest.java](java/wordStat/WordStatInputTest.java)
+* [WordStatChecker.java](java/wordStat/WordStatChecker.java)
+
+Откомпилированные тесты: [WordStatInputTest.jar](artifacts/wordStat/WordStatInputTest.jar)
+
+
 ## Домашнее задание 3. Реверс
 
 Модификации:
