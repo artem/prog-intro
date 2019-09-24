@@ -2,6 +2,8 @@ import java.io.*;
 import java.util.*;
 
 public class WordStatInput {
+    final static int MAX_SIZE = 1_000_000;
+
     private static boolean isWordChar(char c) {
         boolean isLetter = Character.isLetter(c);
         boolean isDash = Character.getType(c) == Character.DASH_PUNCTUATION;
@@ -18,14 +20,18 @@ public class WordStatInput {
             }
             idx++;
         }
-        list[idx] = word;
-        occurences[idx]++;
+
+        if (idx < list.length) {
+            list[idx] = word;
+            occurences[idx]++;
+        } else {
+            System.err.println("Array is full :(");
+        }
     }
 
     public static void main(String[] args) {
-        String[] words = new String[1_000_000];
-        int[] wordOccurs = new int[1_000_000]; 
-        int statSize = 0;
+        String[] words = new String[MAX_SIZE];
+        int[] wordOccurs = new int[MAX_SIZE];
 
         if (args.length != 2) {
             System.err.println("Usage: Word <input file> <output file>");
@@ -66,7 +72,7 @@ public class WordStatInput {
             PrintWriter writer = new PrintWriter(new FileOutputStream(args[1]));
             try {
                 int idx = 0;
-                while (words[idx] != null) {
+                while (idx < list.length && words[idx] != null) {
                     writer.println(words[idx] + ' ' + wordOccurs[idx]);
                     idx++;
                 }
