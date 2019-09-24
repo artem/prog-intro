@@ -11,27 +11,29 @@ public class WordStatInput {
         return isLetter || isDash || isApostrophe;
     }
 
-    private static void addToStats(String word, String[] list, int[] occurences) {
-        int idx = 0;
-        while (idx < list.length && list[idx] != null) {
-            if (list[idx].equals(word)) {
-                occurences[idx]++;
-                return;
+    private static int addToStats(String word, String[] list, int[] occurences, int size) {
+        for (int i = 0; i < size; i++) {
+            if (list[i].equals(word)) {
+                occurences[i]++;
+                return size;
             }
-            idx++;
         }
 
-        if (idx < list.length) {
-            list[idx] = word;
-            occurences[idx]++;
+        if (size < list.length) {
+            list[size] = word;
+            occurences[size]++;
+            size++;
         } else {
             System.err.println("Array is full :(");
         }
+
+        return size;
     }
 
     public static void main(String[] args) {
-        String[] words = new String[MAX_SIZE];
-        int[] wordOccurs = new int[MAX_SIZE];
+        String[] statWords = new String[MAX_SIZE];
+        int[] statOccurencies = new int[MAX_SIZE];
+        int statSize = 0;
 
         if (args.length != 2) {
             System.err.println("Usage: Word <input file> <output file>");
@@ -53,7 +55,7 @@ public class WordStatInput {
                         if (idxStart < i) {
                             String word = line.substring(idxStart, i).toLowerCase();
                             //System.out.println(line.substring(idxStart, i));
-                            addToStats(word, words, wordOccurs);
+                            statSize = addToStats(word, statWords, statOccurencies, statSize);
                         }
                     }
                 }
@@ -71,10 +73,8 @@ public class WordStatInput {
         try {
             PrintWriter writer = new PrintWriter(new FileOutputStream(args[1]));
             try {
-                int idx = 0;
-                while (idx < list.length && words[idx] != null) {
-                    writer.println(words[idx] + ' ' + wordOccurs[idx]);
-                    idx++;
+                for (int i = 0; i < statSize; i++) {
+                    writer.println(statWords[i] + ' ' + statOccurencies[i]);
                 }
             } finally {
                 writer.close();
