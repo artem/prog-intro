@@ -8,6 +8,7 @@ public class WordStatWords {
         boolean isLetter = Character.isLetter(c);
         boolean isDash = Character.getType(c) == Character.DASH_PUNCTUATION;
         boolean isApostrophe = c == '\'';
+
         return isLetter || isDash || isApostrophe;
     }
 
@@ -41,7 +42,12 @@ public class WordStatWords {
         }
 
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(args[0]), "utf8"));
+            BufferedReader reader = new BufferedReader(
+                new InputStreamReader(
+                    new FileInputStream(args[0]), "utf8"
+                ), 1024
+            );
+
             try {
                 String line;
                 while ((line = reader.readLine()) != null) {
@@ -54,7 +60,6 @@ public class WordStatWords {
 
                         if (idxStart < i) {
                             String word = line.substring(idxStart, i).toLowerCase();
-                            //System.out.println(line.substring(idxStart, i));
                             statSize = addToStats(word, statWords, statOccurencies, statSize);
                         }
                     }
