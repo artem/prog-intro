@@ -11,10 +11,12 @@ public class WordStatWords {
     }
 
     private static void addToStats(String word, TreeMap<String, Integer> list) {
-        int value = 0;
+        Integer value;
 
-        if (list.containsKey(word)) {
-            value = list.get(word);
+        value = list.get(word);
+
+        if (value == null) {
+            value = 0;
         }
 
         list.put(word, value + 1);
@@ -56,8 +58,9 @@ public class WordStatWords {
         } catch (FileNotFoundException e) {
             System.err.println("Input file not found: " + e.getMessage());
         } catch (UnsupportedEncodingException e) {
-            System.err.println("Unsupported encoding: " + e.getMessage());
+            System.err.println("Unsupported input encoding: " + e.getMessage());
         } catch (IOException e) {
+            System.err.println("IOException during read: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -71,6 +74,7 @@ public class WordStatWords {
                 writer.close();
             }
         } catch (IOException e) {
+            System.err.println("IOException during write: " + e.getMessage());
             e.printStackTrace();
         }
     }
