@@ -12,7 +12,7 @@ public class SumHex {
                 if (idxStart < j) {
                     String number = arg.substring(idxStart, j);
 
-                    if (number.toLowerCase().startsWith("0x")) {
+                    if (number.startsWith("0x") || number.startsWith("0X")) {
                         ans += Long.parseLong(number.substring(2), 16);
                     } else {
                         ans += Long.parseLong(number);
