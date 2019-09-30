@@ -6,6 +6,13 @@
 Домашнее задание 4. Подсчет слов
 ----
 
+Модификации
+ * *Words*
+    * В выходном файле слова должны быть упорядочены в лексикографическом порядке
+    * Класс должен иметь имя `WordStatWords`
+    * [Исходный код тестов](java/wordStat/WordStatWordsTest.java)
+    * [Откомпилированные тесты](artifacts/wordStat/WordStatWordsTest.jar)
+    
 Исходный код тестов:
 
 * [WordStatInputTest.java](java/wordStat/WordStatInputTest.java)
