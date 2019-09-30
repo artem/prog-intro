@@ -10,20 +10,12 @@ public class WordStatWords {
         return isLetter || isDash || isApostrophe;
     }
 
-    private static void addToStats(String word, TreeMap<String, Integer> list) {
-        Integer value;
-
-        value = list.get(word);
-
-        if (value == null) {
-            value = 0;
-        }
-
-        list.put(word, value + 1);
+    private static void addToStats(String word, Map<String, Integer> list) {
+        list.put(word, list.getOrDefault(word, 0) + 1);
     }
 
     public static void main(String[] args) {
-        TreeMap<String, Integer> statWords = new TreeMap<>();
+        NavigableMap<String, Integer> statWords = new TreeMap<>();
 
         if (args.length != 2) {
             System.err.println("Usage: Word <input file> <output file>");
@@ -34,7 +26,7 @@ public class WordStatWords {
             BufferedReader reader = new BufferedReader(
                 new InputStreamReader(
                     new FileInputStream(args[0]), "utf8"
-                ), 1024
+                )
             );
 
             try {
@@ -68,7 +60,7 @@ public class WordStatWords {
             PrintWriter writer = new PrintWriter(new FileOutputStream(args[1]));
             try {
                 for (Map.Entry<String, Integer> pair : statWords.entrySet()) {
-                    writer.println(pair.getKey() + ' ' + pair.getValue());
+                    writer.println(pair.getKey() + " " + pair.getValue());
                 }
             } finally {
                 writer.close();
