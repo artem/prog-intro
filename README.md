@@ -3,6 +3,16 @@
 [Условия домашних заданий](http://www.kgeorgiy.info/courses/prog-intro/homeworks.html)
 
 
+Домашнее задание 5. Свой сканнер
+----
+
+Исходный код тестов:
+
+* [FastReverseTest.java](java/reverse/FastReverseTest.java)
+
+Откомпилированные тесты: [FastReverseTest.jar](artifacts/reverse/ReverseTest.jar)
+
+
 Домашнее задание 4. Подсчет слов
 ----
 
@@ -12,7 +22,7 @@
     * Класс должен иметь имя `WordStatWords`
     * [Исходный код тестов](java/wordStat/WordStatWordsTest.java)
     * [Откомпилированные тесты](artifacts/wordStat/WordStatWordsTest.jar)
-    
+
 Исходный код тестов:
 
 * [WordStatInputTest.java](java/wordStat/WordStatInputTest.java)
