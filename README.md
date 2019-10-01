@@ -22,6 +22,9 @@
     * Класс должен иметь имя `WordStatWords`
     * [Исходный код тестов](java/wordStat/WordStatWordsTest.java)
     * [Откомпилированные тесты](artifacts/wordStat/WordStatWordsTest.jar)
+ * *Sort*
+    * Пусть _n_ – число слов во входном файле,
+      тогда программа должна работать за O(_n_ log _n_).
 
 Исходный код тестов:
 
