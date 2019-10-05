@@ -22,6 +22,16 @@
     * Класс должен иметь имя `WordStatWords`
     * [Исходный код тестов](java/wordStat/WordStatWordsTest.java)
     * [Откомпилированные тесты](artifacts/wordStat/WordStatWordsTest.jar)
+ * *Sort*
+    * Пусть _n_ – число слов во входном файле,
+      тогда программа должна работать за O(_n_ log _n_).
+ * *Count*
+    * В выходном файле слова должны быть упорядочены по возрастанию числа
+      вхождений, а при равном числе вхождений – по порядку первого вхождения
+      во входном файле
+    * Класс должен иметь имя `WordStatCount`
+    * [Исходный код тестов](java/wordStat/WordStatCountTest.java)
+    * [Откомпилированные тесты](artifacts/wordStat/WordStatCountTest.jar)
 
 Исходный код тестов:
 
