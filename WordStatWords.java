@@ -26,9 +26,7 @@ public class WordStatWords {
             FastScanner sc = new FastScanner(new File(args[0]));
 
             while (sc.hasNextWord()) {
-                String debug = sc.nextWord().toLowerCase();
-                //System.err.println(debug);
-                addToStats(debug, statWords);
+                addToStats(sc.nextWord().toLowerCase(), statWords);
             }
         } catch (FileNotFoundException e) {
             System.err.println("Input file not found: " + e.getMessage());
