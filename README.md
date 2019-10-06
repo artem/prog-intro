@@ -10,7 +10,7 @@
 
 * [FastReverseTest.java](java/reverse/FastReverseTest.java)
 
-Откомпилированные тесты: [FastReverseTest.jar](artifacts/reverse/ReverseTest.jar)
+Откомпилированные тесты: [FastReverseTest.jar](artifacts/reverse/FastReverseTest.jar)
 
 
 Домашнее задание 4. Подсчет слов
