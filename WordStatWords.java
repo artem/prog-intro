@@ -23,29 +23,12 @@ public class WordStatWords {
         }
 
         try {
-            BufferedReader reader = new BufferedReader(
-                new InputStreamReader(
-                    new FileInputStream(args[0]), "utf8"
-                )
-            );
+            FastScanner sc = new FastScanner(new File(args[0]));
 
-            try {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    for (int i = 0; i < line.length(); i++) {
-                        int idxStart = i;
-                        while (i < line.length() && isWordChar(line.charAt(i))) {
-                            i++;
-                        }
-
-                        if (idxStart < i) {
-                            String word = line.substring(idxStart, i).toLowerCase();
-                            addToStats(word, statWords);
-                        }
-                    }
-                }
-            } finally {
-                reader.close();
+            while (sc.hasNextWord()) {
+                String debug = sc.nextWord().toLowerCase();
+                //System.err.println(debug);
+                addToStats(debug, statWords);
             }
         } catch (FileNotFoundException e) {
             System.err.println("Input file not found: " + e.getMessage());
