@@ -89,4 +89,62 @@ public class FastScanner {
         cachedNextWord = null;
         return ret;
     }
+
+    private static boolean isIntChar(char c) {
+        boolean isDigit = Character.isDigit(c);
+        boolean isPlus = c == '+';
+        boolean isMinus = c == '-';
+
+        return isDigit || isPlus || isMinus;
+    }
+
+    private void skipNonInt() throws IOException {
+        while (cachedLine != null) {
+            while (pos < cachedLine.length()) {
+                if (isIntChar(cachedLine.charAt(pos))) {
+                    return;
+                }
+                pos++;
+            }
+            updateCachedLine();
+        }
+    }
+
+    public boolean hasNextInt() {
+        if (cachedNextWord != null) {
+            return true;
+        }
+
+        try {
+            skipNonInt();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        if (cachedLine == null) {
+            return false;
+        }
+
+        int idxEnd = pos;
+        int idxStart = pos;
+        while (idxEnd < cachedLine.length() && isWordChar(cachedLine.charAt(idxEnd))) {
+            idxEnd++;
+        }
+
+        if (idxStart < idxEnd) {
+            cachedNextInt = Integer.parseInt(cachedLine.substring(idxStart, idxEnd));
+            pos = idxEnd;
+            return true;
+        }
+
+        return false;
+    }
+
+    public Integer nextInt() {
+        Integer ret = cachedNextInt;
+
+        cachedNextInt = null;
+        return ret;
+    }
 }
