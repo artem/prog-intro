@@ -7,7 +7,7 @@ public class FastScanner {
     private final BufferedReader reader;
     private String cachedLine;
 
-    private String cachedNextWord;
+    private String cachedWord;
     private Integer cachedInt;
     private Long cachedLong;
 
@@ -32,6 +32,21 @@ public class FastScanner {
         pos = 0;
     }
 
+    public boolean hasNextLine() throws IOException {
+        if (cachedLine != null) {
+            return true;
+        }
+        updateCachedLine();
+        return cachedLine != null;
+    }
+
+    public String nextLine() {
+        String ret = cachedLine;
+
+        cachedLine = null;
+        return ret;
+    }
+
     private static boolean isWordChar(char c) {
         boolean isLetter = Character.isLetter(c);
         boolean isDash = Character.getType(c) == Character.DASH_PUNCTUATION;
@@ -53,7 +68,7 @@ public class FastScanner {
     }
 
     public boolean hasNextWord() {
-        if (cachedNextWord != null) {
+        if (cachedWord != null) {
             return true;
         }
 
@@ -75,7 +90,7 @@ public class FastScanner {
         }
 
         if (idxStart < idxEnd) {
-            cachedNextWord = cachedLine.substring(idxStart, idxEnd);//.toLowerCase();
+            cachedWord = cachedLine.substring(idxStart, idxEnd);//.toLowerCase();
             pos = idxEnd;
             return true;
         }
@@ -84,9 +99,9 @@ public class FastScanner {
     }
 
     public String nextWord() {
-        String ret = cachedNextWord;
+        String ret = cachedWord;
 
-        cachedNextWord = null;
+        cachedWord = null;
         return ret;
     }
 
@@ -111,7 +126,7 @@ public class FastScanner {
     }
 
     public boolean hasNextInt() {
-        if (cachedNextWord != null) {
+        if (cachedInt != null) {
             return true;
         }
 
@@ -128,12 +143,12 @@ public class FastScanner {
 
         int idxEnd = pos;
         int idxStart = pos;
-        while (idxEnd < cachedLine.length() && isWordChar(cachedLine.charAt(idxEnd))) {
+        while (idxEnd < cachedLine.length() && isIntChar(cachedLine.charAt(idxEnd))) {
             idxEnd++;
         }
 
         if (idxStart < idxEnd) {
-            cachedNextInt = Integer.parseInt(cachedLine.substring(idxStart, idxEnd));
+            cachedInt = Integer.parseInt(cachedLine.substring(idxStart, idxEnd));
             pos = idxEnd;
             return true;
         }
@@ -142,9 +157,9 @@ public class FastScanner {
     }
 
     public Integer nextInt() {
-        Integer ret = cachedNextInt;
+        Integer ret = cachedInt;
 
-        cachedNextInt = null;
+        cachedInt = null;
         return ret;
     }
 }
