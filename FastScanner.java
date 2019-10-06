@@ -6,7 +6,7 @@ public class FastScanner {
     private final BufferedReader bufferedReader;*/
     private final BufferedReader reader;
     private String cachedLine;
-    private String cachedNext;
+
     private String cachedNextWord;
     private Integer cachedInt;
     private Long cachedLong;
@@ -27,6 +27,11 @@ public class FastScanner {
         updateCachedLine();
     }
 
+    private void updateCachedLine() throws IOException {
+        cachedLine = reader.readLine();
+        pos = 0;
+    }
+
     private static boolean isWordChar(char c) {
         boolean isLetter = Character.isLetter(c);
         boolean isDash = Character.getType(c) == Character.DASH_PUNCTUATION;
@@ -35,15 +40,10 @@ public class FastScanner {
         return isLetter || isDash || isApostrophe;
     }
 
-    private void updateCachedLine() throws IOException {
-        cachedLine = reader.readLine();
-        pos = 0;
-    }
-
-    private void skipWhitespaces() throws IOException {
+    private void skipNonWord() throws IOException {
         while (cachedLine != null) {
             while (pos < cachedLine.length()) {
-                if (!Character.isWhitespace(cachedLine.charAt(pos))) {
+                if (isWordChar(cachedLine.charAt(pos))) {
                     return;
                 }
                 pos++;
@@ -58,7 +58,7 @@ public class FastScanner {
         }
 
         try {
-            skipWhitespaces();
+            skipNonWord();
         } catch (IOException e) {
             e.printStackTrace();
             return false;
@@ -76,6 +76,7 @@ public class FastScanner {
 
         if (idxStart < idxEnd) {
             cachedNextWord = cachedLine.substring(idxStart, idxEnd);//.toLowerCase();
+            pos = idxEnd;
             return true;
         }
 
@@ -88,37 +89,4 @@ public class FastScanner {
         cachedNextWord = null;
         return ret;
     }
-
-    /*public boolean hasNext() {
-        int idx = pos;
-        int curChar;
-
-        while ((curChar = reader.read()) != -1) {
-            if (!Character.isWhitespace((char)curChar)) {
-                return true;
-            }
-            idx++;
-        }
-        return false;
-    }
-
-    public String next() {
-        int start = pos;
-        int idx = pos;
-
-        while (idx < stream.length()) {
-            if (!Character.isWhitespace(stream.charAt(idx))) {
-                break;
-            }
-            idx++;
-        }
-
-        if (idx == stream.length()) {
-            System.err.println("Oops!");
-            return null;
-        }
-
-        pos = idx;
-        return stream.substring(start, idx);
-    }*/
 }
