@@ -98,7 +98,7 @@ public class FastScanner {
 
         for (int i = 0; i < buffer.length(); i++) {
             char c = buffer.charAt(i);
-            if (!Character.isDigit(c) && c != '-' && c != '+') {
+            if (!Character.isDigit(c) && (i == 0 && c != '-' && c != '+')) {
                 return false;
             }
         }
