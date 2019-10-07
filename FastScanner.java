@@ -1,17 +1,17 @@
 import java.io.*;
+import java.util.*;
 
 public class FastScanner {
     /*private final InputStream stream;
     private final InputStreamReader reader;
     private final BufferedReader bufferedReader;*/
     private final BufferedReader reader;
-    private String cachedLine;
+    private String cachedNext;
+    private String cachedNextLine;
 
-    private String cachedWord;
+    private PriorityQueue<String> cachedWord = new PriorityQueue<>();
     private Integer cachedInt;
     private Long cachedLong;
-
-    private int pos = 0;
 
     public FastScanner(File file)
                 throws FileNotFoundException, UnsupportedEncodingException, IOException {
@@ -24,26 +24,20 @@ public class FastScanner {
 
     public FastScanner(InputStream stream) throws UnsupportedEncodingException, IOException {
         this.reader = new BufferedReader(new InputStreamReader(stream, "utf8"));
-        updateCachedLine();
-    }
-
-    private void updateCachedLine() throws IOException {
-        cachedLine = reader.readLine();
-        pos = 0;
     }
 
     public boolean hasNextLine() throws IOException {
-        if (cachedLine != null) {
+        if (cachedNextLine != null) {
             return true;
         }
-        updateCachedLine();
-        return cachedLine != null;
+        cachedNextLine = reader.readLine();
+        return cachedNextLine != null;
     }
 
     public String nextLine() {
-        String ret = cachedLine;
+        String ret = cachedNextLine;
 
-        cachedLine = null;
+        cachedNextLine = null;
         return ret;
     }
 
@@ -55,74 +49,37 @@ public class FastScanner {
         return isLetter || isDash || isApostrophe;
     }
 
-    private void skipNonWord() throws IOException {
-        while (cachedLine != null) {
-            while (pos < cachedLine.length()) {
-                if (isWordChar(cachedLine.charAt(pos))) {
-                    return;
-                }
-                pos++;
-            }
-            updateCachedLine();
-        }
-    }
-
     public boolean hasNextWord() {
-        if (cachedWord != null) {
+        String buffer;
+        boolean empty = true;
+
+        if (cachedWord.size() > 0) {
             return true;
         }
 
-        try {
-            skipNonWord();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (!hasNext()) {
             return false;
         }
 
-        if (cachedLine == null) {
-            return false;
+        buffer = next();
+
+        for (int i = 0; i < buffer.length(); i++) {
+            int idxStart = i;
+            while (i < buffer.length() && isWordChar(buffer.charAt(i))) {
+                i++;
+            }
+
+            if (idxStart < i) {
+                cachedWord.add(buffer.substring(idxStart, i));
+                empty = false;
+            }
         }
 
-        int idxEnd = pos;
-        int idxStart = pos;
-        while (idxEnd < cachedLine.length() && isWordChar(cachedLine.charAt(idxEnd))) {
-            idxEnd++;
-        }
-
-        if (idxStart < idxEnd) {
-            cachedWord = cachedLine.substring(idxStart, idxEnd);//.toLowerCase();
-            pos = idxEnd;
-            return true;
-        }
-
-        return false;
+        return !empty;
     }
 
     public String nextWord() {
-        String ret = cachedWord;
-
-        cachedWord = null;
-        return ret;
-    }
-
-    private static boolean isIntChar(char c) {
-        boolean isDigit = Character.isDigit(c);
-        boolean isPlus = c == '+';
-        boolean isMinus = c == '-';
-
-        return isDigit || isPlus || isMinus;
-    }
-
-    private void skipNonInt() throws IOException {
-        while (cachedLine != null) {
-            while (pos < cachedLine.length()) {
-                if (isIntChar(cachedLine.charAt(pos))) {
-                    return;
-                }
-                pos++;
-            }
-            updateCachedLine();
-        }
+        return cachedWord.poll();
     }
 
     public boolean hasNextInt() {
@@ -130,36 +87,72 @@ public class FastScanner {
             return true;
         }
 
-        try {
-            skipNonInt();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (!hasNext()) {
             return false;
         }
 
-        if (cachedLine == null) {
-            return false;
+        for (int i = 0; i < cachedNext.length(); i++) {
+            char c = cachedNext.charAt(i);
+            if (!Character.isDigit(c) && c != '-' && c != '+') {
+                return false;
+            }
         }
 
-        int idxEnd = pos;
-        int idxStart = pos;
-        while (idxEnd < cachedLine.length() && isIntChar(cachedLine.charAt(idxEnd))) {
-            idxEnd++;
-        }
+        cachedInt = Integer.parseInt(cachedNext);
 
-        if (idxStart < idxEnd) {
-            cachedInt = Integer.parseInt(cachedLine.substring(idxStart, idxEnd));
-            pos = idxEnd;
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     public Integer nextInt() {
         Integer ret = cachedInt;
 
         cachedInt = null;
+        return ret;
+    }
+
+    public boolean hasNext() {
+        int cur;
+        StringBuilder str;
+
+        if (cachedNext != null) {
+            return true;
+        }
+
+        try {
+            while (true) {
+                cur = reader.read();
+
+                if (cur == -1) {
+                    return false;
+                } else if (!Character.isWhitespace(cur)) {
+                    break;
+                }
+            }
+
+            str = new StringBuilder();
+            str.append((char)cur);
+
+            while (true) {
+                cur = reader.read();
+
+                if (cur == -1 || Character.isWhitespace(cur)) {
+                    break;
+                }
+                str.append((char)cur);
+            }
+
+            cachedNext = str.toString();
+            return true;
+        } catch (IOException e) {
+            System.err.println("IOException during read: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public String next() {
+        String ret = cachedNext;
+
+        cachedNext = null;
         return ret;
     }
 }
