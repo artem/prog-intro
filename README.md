@@ -6,6 +6,14 @@
 Домашнее задание 5. Свой сканнер
 ----
 
+Модификации
+ * *Transpose*
+    * Рассмотрим входные данные как (не полностью определенную) матрицу,
+      выведите ее в транспонированном виде
+    * Класс должен иметь имя `ReverseTranspose`
+    * [Исходный код тестов](java/reverse/FastReverseTransposeTest.java)
+    * [Откомпилированные тесты](artifacts/reverse/FastReverseTransposeTest.jar)
+
 Исходный код тестов:
 
 * [FastReverseTest.java](java/reverse/FastReverseTest.java)
