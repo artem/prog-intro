@@ -57,25 +57,26 @@ public class FastScanner {
             return true;
         }
 
-        if (!hasNext()) {
-            return false;
+        while (hasNext()) {
+            buffer = next();
+
+            for (int i = 0; i < buffer.length(); i++) {
+                int idxStart = i;
+                while (i < buffer.length() && isWordChar(buffer.charAt(i))) {
+                    i++;
+                }
+
+                if (idxStart < i) {
+                    cachedWord.add(buffer.substring(idxStart, i));
+                    empty = false;
+                }
+            }
+            if (!empty) {
+                return true;
+            }
         }
 
-        buffer = next();
-
-        for (int i = 0; i < buffer.length(); i++) {
-            int idxStart = i;
-            while (i < buffer.length() && isWordChar(buffer.charAt(i))) {
-                i++;
-            }
-
-            if (idxStart < i) {
-                cachedWord.add(buffer.substring(idxStart, i));
-                empty = false;
-            }
-        }
-
-        return !empty;
+        return false;
     }
 
     public String nextWord() {
