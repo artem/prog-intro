@@ -3,6 +3,17 @@
 [Условия домашних заданий](http://www.kgeorgiy.info/courses/prog-intro/homeworks.html)
 
 
+Домашнее задание 6. Подсчет слов++
+----
+
+Исходный код тестов:
+
+* [WordStatIndexTest.java](java/wordStat/WordStatIndexTest.java)
+* [WordStatIndexChecker.java](java/wordStat/WordStatIndexChecker.java)
+
+Откомпилированные тесты: [WordStatIndexTest.jar](artifacts/wordStat/WordStatIndexTest.jar)
+
+
 Домашнее задание 5. Свой сканнер
 ----
 
