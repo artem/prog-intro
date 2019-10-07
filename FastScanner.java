@@ -84,6 +84,8 @@ public class FastScanner {
     }
 
     public boolean hasNextInt() {
+        String buffer;
+
         if (cachedInt != null) {
             return true;
         }
@@ -92,14 +94,16 @@ public class FastScanner {
             return false;
         }
 
-        for (int i = 0; i < cachedNext.length(); i++) {
-            char c = cachedNext.charAt(i);
+        buffer = next();
+
+        for (int i = 0; i < buffer.length(); i++) {
+            char c = buffer.charAt(i);
             if (!Character.isDigit(c) && c != '-' && c != '+') {
                 return false;
             }
         }
 
-        cachedInt = Integer.parseInt(cachedNext);
+        cachedInt = Integer.parseInt(buffer);
 
         return true;
     }
