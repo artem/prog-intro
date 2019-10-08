@@ -24,6 +24,12 @@
     * Класс должен иметь имя `ReverseTranspose`
     * [Исходный код тестов](java/reverse/FastReverseTransposeTest.java)
     * [Откомпилированные тесты](artifacts/reverse/FastReverseTransposeTest.jar)
+ * *Sort*
+    * Строки должны быть отсортированы по сумме в обратном порядке
+      (при равенстве сумм – в порядке обратном следованию во входе).
+      Числа в строке так же должны быть отсортированы в обратном порядке.
+    * [Исходный код тестов](java/reverse/FastReverseSortTest.java)
+    * [Откомпилированные тесты](artifacts/reverse/FastReverseSortTest.jar)
 
 Исходный код тестов:
 
