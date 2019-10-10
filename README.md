@@ -30,6 +30,12 @@
       Числа в строке так же должны быть отсортированы в обратном порядке.
     * [Исходный код тестов](java/reverse/FastReverseSortTest.java)
     * [Откомпилированные тесты](artifacts/reverse/FastReverseSortTest.jar)
+ * *Min*
+    * Рассмотрим входные данные как (не полностью определенную) матрицу,
+      вместо каждого числа выведите минимум из чисел в его столбце и строке
+    * Класс должен иметь имя `ReverseMin`
+    * [Исходный код тестов](java/reverse/FastReverseMinTest.java)
+    * [Откомпилированные тесты](artifacts/reverse/FastReverseMinTest.jar)
 
 Исходный код тестов:
 
