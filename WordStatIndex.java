@@ -2,18 +2,14 @@ import java.io.*;
 import java.util.*;
 
 public class WordStatIndex {
-    private static void addToStats(String word, Map<String, Integer> list,
-                                    Map<String, LinkedHashSet<Integer> >  position,
-                                    int idx) {
-        list.put(word, list.getOrDefault(word, 0) + 1);
-        LinkedHashSet<Integer> chain = position.getOrDefault(word, new LinkedHashSet<>());
+    private static void addToStats(String word, Map<String, LinkedHashSet<Integer> > list, int idx) {
+        LinkedHashSet<Integer> chain = list.getOrDefault(word, new LinkedHashSet<>());
         chain.add(idx);
-        position.put(word, chain);
+        list.put(word, chain);
     }
 
     public static void main(String[] args) {
-        Map<String, Integer> statWords = new LinkedHashMap<>();
-        Map<String, LinkedHashSet<Integer> > occurs = new HashMap<>();
+        Map<String, LinkedHashSet<Integer> > statWords = new LinkedHashMap<>();
 
         if (args.length != 2) {
             System.err.println("Usage: Word <input file> <output file>");
@@ -26,7 +22,7 @@ public class WordStatIndex {
             int idx = 1;
             while (sc.hasNextWord()) {
                 String word = sc.nextWord();
-                addToStats(word.toLowerCase(), statWords, occurs, idx++);
+                addToStats(word.toLowerCase(), statWords, idx++);
             }
         } catch (FileNotFoundException e) {
             System.err.println("Input file not found: " + e.getMessage());
@@ -40,16 +36,15 @@ public class WordStatIndex {
         try {
             PrintWriter writer = new PrintWriter(new FileOutputStream(args[1]));
             try {
-                for (Map.Entry<String, Integer> pair : statWords.entrySet()) {
-                    writer.print(pair.getKey() + " " + pair.getValue());
-                    for (int idx : occurs.get(pair.getKey())) {
+                for (Map.Entry<String, LinkedHashSet<Integer> > pair : statWords.entrySet()) {
+                    writer.print(pair.getKey() + " " + pair.getValue().size());
+                    for (int idx : pair.getValue()) {
                         writer.print(" " + idx);
                     }
                     writer.println();
                 }
             } finally {
                 writer.close();
-                //while(args[1].equals("test8.out")) {}
             }
         } catch (IOException e) {
             System.err.println("IOException during write: " + e.getMessage());
