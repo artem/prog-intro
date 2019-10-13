@@ -2,14 +2,14 @@ import java.io.*;
 import java.util.*;
 
 public class WordStatIndex {
-    private static void addToStats(String word, Map<String, LinkedHashSet<Integer> > list, int idx) {
-        LinkedHashSet<Integer> chain = list.getOrDefault(word, new LinkedHashSet<>());
+    private static void addToStats(String word, Map<String, Set<Integer> > list, int idx) {
+        Set<Integer> chain = list.getOrDefault(word, new LinkedHashSet<>());
         chain.add(idx);
         list.put(word, chain);
     }
 
     public static void main(String[] args) {
-        Map<String, LinkedHashSet<Integer> > statWords = new LinkedHashMap<>();
+        Map<String, Set<Integer> > statWords = new LinkedHashMap<>();
 
         if (args.length != 2) {
             System.err.println("Usage: Word <input file> <output file>");
@@ -36,7 +36,7 @@ public class WordStatIndex {
         try {
             PrintWriter writer = new PrintWriter(new FileOutputStream(args[1]));
             try {
-                for (Map.Entry<String, LinkedHashSet<Integer> > pair : statWords.entrySet()) {
+                for (Map.Entry<String, Set<Integer> > pair : statWords.entrySet()) {
                     writer.print(pair.getKey() + " " + pair.getValue().size());
                     for (int idx : pair.getValue()) {
                         writer.print(" " + idx);
