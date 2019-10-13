@@ -3,6 +3,17 @@
 [Условия домашних заданий](http://www.kgeorgiy.info/courses/prog-intro/homeworks.html)
 
 
+Домашнее задание 6. Подсчет слов++
+----
+
+Исходный код тестов:
+
+* [WordStatIndexTest.java](java/wordStat/WordStatIndexTest.java)
+* [WordStatIndexChecker.java](java/wordStat/WordStatIndexChecker.java)
+
+Откомпилированные тесты: [WordStatIndexTest.jar](artifacts/wordStat/WordStatIndexTest.jar)
+
+
 Домашнее задание 5. Свой сканнер
 ----
 
@@ -13,6 +24,18 @@
     * Класс должен иметь имя `ReverseTranspose`
     * [Исходный код тестов](java/reverse/FastReverseTransposeTest.java)
     * [Откомпилированные тесты](artifacts/reverse/FastReverseTransposeTest.jar)
+ * *Sort*
+    * Строки должны быть отсортированы по сумме в обратном порядке
+      (при равенстве сумм – в порядке обратном следованию во входе).
+      Числа в строке так же должны быть отсортированы в обратном порядке.
+    * [Исходный код тестов](java/reverse/FastReverseSortTest.java)
+    * [Откомпилированные тесты](artifacts/reverse/FastReverseSortTest.jar)
+ * *Min*
+    * Рассмотрим входные данные как (не полностью определенную) матрицу,
+      вместо каждого числа выведите минимум из чисел в его столбце и строке
+    * Класс должен иметь имя `ReverseMin`
+    * [Исходный код тестов](java/reverse/FastReverseMinTest.java)
+    * [Откомпилированные тесты](artifacts/reverse/FastReverseMinTest.jar)
 
 Исходный код тестов:
 
