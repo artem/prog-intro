@@ -2,34 +2,34 @@ import java.util.*;
 import java.io.*;
 
 public class ReverseTranspose {
-    public static int[] stringToIntArr(String s, int[] buffer) throws UnsupportedEncodingException, IOException {
-        FastScanner sc = new FastScanner(s);
-        int size = 0;
+    private static void fillColumn(String nums, List<List<Integer> > matrix) throws UnsupportedEncodingException, IOException {
+        FastScanner sc = new FastScanner(nums);
 
+        int idx = 0;
         while (sc.hasNextInt()) {
-            buffer[size++] = sc.nextInt();
+            int num = sc.nextInt();
+
+            if (idx >= matrix.size()) {
+                matrix.add(new ArrayList<Integer>());
+            }
+            matrix.get(idx).add(num);
+
+            idx++;
         }
-        return Arrays.copyOf(buffer, size);
     }
 
     public static void main(String[] args) {
         try {
             FastScanner sc = new FastScanner(System.in);
-            int[][] numbers = new int[1_000_000][];
-            int[] buffer = new int[1_000_000];
-            int size = 0;
-            int maxLineLength = 0;
+            List<List<Integer> > matrix = new ArrayList<>();
 
             while (sc.hasNextLine()) {
-                numbers[size++] = stringToIntArr(sc.nextLine(), buffer);
-                maxLineLength = Math.max(numbers[size - 1].length, maxLineLength);
+                fillColumn(sc.nextLine(), matrix);
             }
 
-            for (int j = 0; j < maxLineLength; j++) {
-                for (int i = 0; i < size; i++) {
-                    if (j < numbers[i].length) {
-                        System.out.print(numbers[i][j] + " ");
-                    }
+            for (List<Integer> row : matrix) {
+                for (int num : row) {
+                    System.out.print(num + " ");
                 }
                 System.out.println();
             }
