@@ -2,19 +2,17 @@ import java.io.*;
 import java.util.*;
 
 public class FastScanner {
-    /*private final InputStream stream;
-    private final InputStreamReader reader;
-    private final BufferedReader bufferedReader;*/
     private final BufferedReader reader;
+
     private String cachedNext;
     private String cachedNextLine;
-
     private LinkedList<String> cachedWord = new LinkedList<>();
     private Integer cachedInt;
     private Long cachedLong;
 
-    public FastScanner(File file)
-                throws FileNotFoundException, UnsupportedEncodingException, IOException {
+    public FastScanner(File file) throws FileNotFoundException,
+                                            UnsupportedEncodingException,
+                                            IOException {
         this(new FileInputStream(file));
     }
 
@@ -30,13 +28,17 @@ public class FastScanner {
         if (cachedNextLine != null) {
             return true;
         }
+
         cachedNextLine = reader.readLine();
         return cachedNextLine != null;
     }
 
-    public String nextLine() {
-        String ret = cachedNextLine;
+    public String nextLine() throws IOException {
+        if (!hasNextLine()) {
+            throw new NoSuchElementException("No new lines in stream!");
+        }
 
+        String ret = cachedNextLine;
         cachedNextLine = null;
         return ret;
     }
@@ -62,6 +64,7 @@ public class FastScanner {
 
             for (int i = 0; i < buffer.length(); i++) {
                 int idxStart = i;
+
                 while (i < buffer.length() && isWordChar(buffer.charAt(i))) {
                     i++;
                 }
@@ -71,6 +74,7 @@ public class FastScanner {
                     empty = false;
                 }
             }
+
             if (!empty) {
                 return true;
             }
@@ -80,7 +84,11 @@ public class FastScanner {
     }
 
     public String nextWord() {
-        return cachedWord.poll();
+        if (!hasNextWord()) {
+            throw new NoSuchElementException("No words in stream!");
+        }
+
+        return cachedWord.remove();
     }
 
     public boolean hasNextInt() {
@@ -98,19 +106,26 @@ public class FastScanner {
 
         for (int i = 0; i < buffer.length(); i++) {
             char c = buffer.charAt(i);
-            if (!Character.isDigit(c) && (i == 0 && c != '-' && c != '+')) {
+            if (!Character.isDigit(c) && c != '-' && c != '+') {
                 return false;
             }
         }
 
-        cachedInt = Integer.parseInt(buffer);
+        try {
+            cachedInt = Integer.parseInt(buffer);
+        } catch (NumberFormatException e) {
+            return false;
+        }
 
         return true;
     }
 
     public Integer nextInt() {
-        Integer ret = cachedInt;
+        if (!hasNextInt()) {
+            throw new NoSuchElementException("No integers in stream!");
+        }
 
+        Integer ret = cachedInt;
         cachedInt = null;
         return ret;
     }
@@ -155,8 +170,11 @@ public class FastScanner {
     }
 
     public String next() {
-        String ret = cachedNext;
+        if (!hasNext()) {
+            throw new NoSuchElementException("No tokens in stream!");
+        }
 
+        String ret = cachedNext;
         cachedNext = null;
         return ret;
     }
