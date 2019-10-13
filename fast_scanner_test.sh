@@ -1,2 +1,0 @@
-javac FastScannerTest.java
-java FastScannerTest
