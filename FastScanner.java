@@ -9,7 +9,7 @@ public class FastScanner {
     private String cachedNext;
     private String cachedNextLine;
 
-    private PriorityQueue<String> cachedWord = new PriorityQueue<>();
+    private LinkedList<String> cachedWord = new LinkedList<>();
     private Integer cachedInt;
     private Long cachedLong;
 
