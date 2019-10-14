@@ -6,7 +6,7 @@ public class FastScanner {
 
     private String cachedNext;
     private String cachedNextLine;
-    private LinkedList<String> cachedWord;
+    private Queue<String> cachedWord;
     private Integer cachedInt;
 
     public FastScanner(File file) throws FileNotFoundException,
@@ -61,7 +61,7 @@ public class FastScanner {
             return true;
         }
 
-        LinkedList<String> queue = new LinkedList<>();
+        Queue<String> queue = new ArrayDeque<>();
 
         while (hasNext()) {
             String buffer = next();
@@ -118,11 +118,10 @@ public class FastScanner {
 
         try {
             cachedInt = Integer.parseInt(buffer);
+            return true;
         } catch (NumberFormatException e) {
             return false;
         }
-
-        return true;
     }
 
     public Integer nextInt() {
