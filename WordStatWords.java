@@ -25,8 +25,12 @@ public class WordStatWords {
         try {
             FastScanner sc = new FastScanner(new File(args[0]));
 
-            while (sc.hasNextWord()) {
-                addToStats(sc.nextWord().toLowerCase(), statWords);
+            try {
+                while (sc.hasNextWord()) {
+                    addToStats(sc.nextWord().toLowerCase(), statWords);
+                }
+            } finally {
+                sc.close();
             }
         } catch (FileNotFoundException e) {
             System.err.println("Input file not found: " + e.getMessage());
@@ -38,10 +42,11 @@ public class WordStatWords {
         }
 
         try {
-            PrintWriter writer = new PrintWriter(new FileOutputStream(args[1]));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[1]), "utf8"));
             try {
                 for (Map.Entry<String, Integer> pair : statWords.entrySet()) {
-                    writer.println(pair.getKey() + " " + pair.getValue());
+                    writer.write(pair.getKey() + " " + pair.getValue());
+                    writer.newLine();
                 }
             } finally {
                 writer.close();

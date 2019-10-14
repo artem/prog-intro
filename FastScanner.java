@@ -6,9 +6,8 @@ public class FastScanner {
 
     private String cachedNext;
     private String cachedNextLine;
-    private LinkedList<String> cachedWord = new LinkedList<>();
+    private LinkedList<String> cachedWord;
     private Integer cachedInt;
-    private Long cachedLong;
 
     public FastScanner(File file) throws FileNotFoundException,
                                             UnsupportedEncodingException,
@@ -16,12 +15,16 @@ public class FastScanner {
         this(new FileInputStream(file));
     }
 
-    public FastScanner(String string) throws UnsupportedEncodingException, IOException {
-        this(new ByteArrayInputStream(string.getBytes()));
+    public FastScanner(String string) {
+        this.reader = new BufferedReader(new StringReader(string));
     }
 
     public FastScanner(InputStream stream) throws UnsupportedEncodingException, IOException {
         this.reader = new BufferedReader(new InputStreamReader(stream, "utf8"));
+    }
+
+    public void close() throws IOException {
+        this.reader.close();
     }
 
     public boolean hasNextLine() throws IOException {
@@ -52,15 +55,16 @@ public class FastScanner {
     }
 
     public boolean hasNextWord() {
-        String buffer;
         boolean empty = true;
 
-        if (cachedWord.size() > 0) {
+        if (cachedWord != null && cachedWord.size() > 0) {
             return true;
         }
 
+        LinkedList<String> queue = new LinkedList<>();
+
         while (hasNext()) {
-            buffer = next();
+            String buffer = next();
 
             for (int i = 0; i < buffer.length(); i++) {
                 int idxStart = i;
@@ -70,12 +74,13 @@ public class FastScanner {
                 }
 
                 if (idxStart < i) {
-                    cachedWord.add(buffer.substring(idxStart, i));
+                    queue.add(buffer.substring(idxStart, i));
                     empty = false;
                 }
             }
 
             if (!empty) {
+                cachedWord = queue;
                 return true;
             }
         }
@@ -104,12 +109,12 @@ public class FastScanner {
 
         buffer = next();
 
-        for (int i = 0; i < buffer.length(); i++) {
+        /*for (int i = 0; i < buffer.length(); i++) {
             char c = buffer.charAt(i);
             if (!Character.isDigit(c) && c != '-' && c != '+') {
                 return false;
             }
-        }
+        }*/
 
         try {
             cachedInt = Integer.parseInt(buffer);
@@ -176,6 +181,9 @@ public class FastScanner {
 
         String ret = cachedNext;
         cachedNext = null;
+        cachedNextLine = null;
+        cachedWord = null;
+        cachedInt = null;
         return ret;
     }
 }

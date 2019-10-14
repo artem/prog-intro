@@ -2,24 +2,40 @@ import java.io.*;
 import java.util.*;
 
 public class WordStatLineIndex {
-    private static void addToStats(String word, Map<String, Set<List<Integer> > > list, int idxStr, int idxWord) {
-        Set<List<Integer> > chain = list.getOrDefault(word, new LinkedHashSet<>());
-        List<Integer> wordPos = List.of(idxStr, idxWord);
-        chain.add(wordPos);
-        list.put(word, chain);
+    private static class IntPair {
+        private int l;
+        private int r;
+
+        public IntPair(int l, int r) {
+            this.l = l;
+            this.r = r;
+        }
+
+        public int getL() {
+            return l;
+        }
+
+        public int getR() {
+            return r;
+        }
     }
-    private static void parseLine(String line, Map<String, Set<List<Integer> > > list, int idxStr)
-                                    throws UnsupportedEncodingException, IOException {
+
+    private static void parseLine(String line, Map<String, List<IntPair > > list, int idxStr) {
         FastScanner sc = new FastScanner(line);
         int idxWord = 1;
 
         while (sc.hasNextWord()) {
-            addToStats(sc.nextWord().toLowerCase(), list, idxStr, idxWord++);
+            String word = sc.nextWord().toLowerCase();
+            List<IntPair > chain = list.getOrDefault(word, new LinkedList<>());
+            IntPair wordPos = new IntPair(idxStr, idxWord++);
+
+            chain.add(wordPos);
+            list.put(word, chain);
         }
     }
 
     public static void main(String[] args) {
-        Map<String, Set<List<Integer> > > statWords = new TreeMap<>();
+        NavigableMap<String, List<IntPair > > statWords = new TreeMap<>();
 
         if (args.length != 2) {
             System.err.println("Usage: Word <input file> <output file>");
@@ -29,10 +45,14 @@ public class WordStatLineIndex {
         try {
             FastScanner sc = new FastScanner(new File(args[0]));
 
-            int idx = 1;
-            while (sc.hasNextLine()) {
-                String line = sc.nextLine();
-                parseLine(line, statWords, idx++);
+            try {
+                int idx = 1;
+
+                while (sc.hasNextLine()) {
+                    parseLine(sc.nextLine(), statWords, idx++);
+                }
+            } finally {
+                sc.close();
             }
         } catch (FileNotFoundException e) {
             System.err.println("Input file not found: " + e.getMessage());
@@ -44,14 +64,15 @@ public class WordStatLineIndex {
         }
 
         try {
-            PrintWriter writer = new PrintWriter(new FileOutputStream(args[1]));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[1]), "utf8"));
             try {
-                for (Map.Entry<String, Set<List<Integer> > > pair : statWords.entrySet()) {
-                    writer.print(pair.getKey() + " " + pair.getValue().size());
-                    for (List<Integer> pos : pair.getValue()) {
-                        writer.print(" " + pos.get(0) + ":" + pos.get(1));
+                for (Map.Entry<String, List<IntPair > > pair : statWords.entrySet()) {
+                    writer.write(pair.getKey() + " " + pair.getValue().size());
+
+                    for (IntPair pos : pair.getValue()) {
+                        writer.write(" " + pos.getL() + ":" + pos.getR());
                     }
-                    writer.println();
+                    writer.newLine();
                 }
             } finally {
                 writer.close();
