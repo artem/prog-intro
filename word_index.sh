@@ -1,2 +1,2 @@
-javac WordStatIndex.java
-java -jar artifacts/wordStat/WordStatIndexTest.jar
+javac WordStatLineIndex.java
+java -jar artifacts/wordStat/WordStatLineIndexTest.jar
