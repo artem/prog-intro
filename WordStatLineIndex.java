@@ -2,40 +2,22 @@ import java.io.*;
 import java.util.*;
 
 public class WordStatLineIndex {
-    private static class IntPair {
-        private int l;
-        private int r;
-
-        public IntPair(int l, int r) {
-            this.l = l;
-            this.r = r;
-        }
-
-        public int getL() {
-            return l;
-        }
-
-        public int getR() {
-            return r;
-        }
-    }
-
-    private static void parseLine(String line, Map<String, List<IntPair > > list, int idxStr) {
+    private static void parseLine(String line, Map<String, List<int[]>> list, int idxStr) {
         FastScanner sc = new FastScanner(line);
         int idxWord = 1;
 
         while (sc.hasNextWord()) {
             String word = sc.nextWord().toLowerCase();
-            List<IntPair > chain = list.getOrDefault(word, new LinkedList<>());
-            IntPair wordPos = new IntPair(idxStr, idxWord++);
+            List<int[]> chain = list.getOrDefault(word, new LinkedList<int[]>());
 
+            int[] wordPos = new int[] {idxStr, idxWord++};
             chain.add(wordPos);
             list.put(word, chain);
         }
     }
 
     public static void main(String[] args) {
-        NavigableMap<String, List<IntPair > > statWords = new TreeMap<>();
+        NavigableMap<String, List<int[]>> statWords = new TreeMap<>();
 
         if (args.length != 2) {
             System.err.println("Usage: Word <input file> <output file>");
@@ -66,11 +48,11 @@ public class WordStatLineIndex {
         try {
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[1]), "utf8"));
             try {
-                for (Map.Entry<String, List<IntPair > > pair : statWords.entrySet()) {
+                for (Map.Entry<String, List<int[]>> pair : statWords.entrySet()) {
                     writer.write(pair.getKey() + " " + pair.getValue().size());
 
-                    for (IntPair pos : pair.getValue()) {
-                        writer.write(" " + pos.getL() + ":" + pos.getR());
+                    for (int[] pos : pair.getValue()) {
+                        writer.write(" " + pos[0] + ":" + pos[1]);
                     }
                     writer.newLine();
                 }
