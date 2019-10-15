@@ -21,6 +21,12 @@
     * Класс должен иметь имя `WordStatLineIndex`
     * [Исходный код тестов](java/wordStat/WordStatLineIndexTest.java)
     * [Откомпилированные тесты](artifacts/wordStat/WordStatLineIndexTest.jar)
+ * *FirstIndex*
+    * Вместо номеров вхождений во всем файле надо указывать
+      только первое вхождение в каждой строке
+    * Класс должен иметь имя `WordStatFirstIndex`
+    * [Исходный код тестов](java/wordStat/WordStatFirstIndexTest.java)
+    * [Откомпилированные тесты](artifacts/wordStat/WordStatFirstIndexTest.jar)
 
 Исходный код тестов:
 
