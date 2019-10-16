@@ -1,38 +1,33 @@
 package markup;
 
-import base.Asserts;
-import base.TestCounter;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.function.Consumer;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Georgiy Korneev (kgeorgiy@kgeorgiy.info)
  */
-public class MarkdownTest {
-    private TestCounter counter = new TestCounter();
+public class MarkdownTest extends AbstractTest {
+    private static final Map<String, String> MARKDOWN = Map.of(
+            "<", "",
+            ">", ""
+    );
 
     public static void main(String... args) {
         new MarkdownTest().run();
     }
 
-    protected void run() {
-        test();
-        counter.printStatus(getClass());
-    }
-
-    private void test() {
-        test(new Paragraph(Collections.singletonList(new Text("Hello"))), "Hello");
-        test(new Paragraph(Collections.singletonList(new Emphasis(Collections.singletonList(new Text("Hello"))))), "*<Hello*>");
-        test(new Paragraph(Collections.singletonList(new Strong(Collections.singletonList(new Text("Hello"))))), "__<Hello__>");
-        test(new Paragraph(Collections.singletonList(new Strikeout(Collections.singletonList(new Text("Hello"))))), "~<Hello~>");
-        final Paragraph paragraph = new Paragraph(Collections.singletonList(
-                new Strong(Arrays.asList(
+    @Override
+    protected void test() {
+        test(new Paragraph(List.of(new Text("Hello"))), "Hello");
+        test(new Paragraph(List.of(new Emphasis(List.of(new Text("Hello"))))), "*<Hello*>");
+        test(new Paragraph(List.of(new Strong(List.of(new Text("Hello"))))), "__<Hello__>");
+        test(new Paragraph(List.of(new Strikeout(List.of(new Text("Hello"))))), "~<Hello~>");
+        final Paragraph paragraph = new Paragraph(List.of(
+                new Strong(List.of(
                         new Text("1"),
-                        new Strikeout(Arrays.asList(
+                        new Strikeout(List.of(
                                 new Text("2"),
-                                new Emphasis(Arrays.asList(
+                                new Emphasis(List.of(
                                         new Text("3"),
                                         new Text("4")
                                 )),
@@ -45,22 +40,13 @@ public class MarkdownTest {
             paragraph,
             "__<1~<2*<34*>5~>6__>"
         );
-        test(new Paragraph(Collections.singletonList(
-                new Strong(Arrays.asList(new Text("sdq"), new Strikeout(Arrays.asList(new Emphasis(Collections.singletonList(new Text("r"))), new Text("vavc"))), new Text("zg"))))),
+        test(new Paragraph(List.of(
+                new Strong(List.of(new Text("sdq"), new Strikeout(List.of(new Emphasis(List.of(new Text("r"))), new Text("vavc"))), new Text("zg"))))),
                 "__<sdq~<*<r*>vavc~>zg__>"
         );
     }
 
     protected void test(Paragraph paragraph, final String expected) {
-        test(paragraph::toMarkdown, expected.replaceAll("[<>]", ""));
-    }
-
-    public void test(Consumer<StringBuilder> f, final String expected) {
-        counter.nextTest();
-        final StringBuilder sb = new StringBuilder();
-        f.accept(sb);
-        final String actual = sb.toString();
-        Asserts.assertEquals("Result", expected, actual);
-        counter.passed();
+        test(paragraph::toMarkdown, expected, MARKDOWN);
     }
 }

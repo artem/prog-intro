@@ -8,7 +8,8 @@
 
 Исходный код тестов:
 
-* [Исходный код тестов](java/markup/MarkdownTest.java)
+ * [MarkdownTest.java](java/markup/MarkdownTest.java)
+ * [AbstractTest.java](java/markup/AbstractTest.java)
 
 
 Домашнее задание 6. Подсчет слов++
