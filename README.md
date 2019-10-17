@@ -28,6 +28,12 @@
     * Класс должен иметь имя `WordStatFirstIndex`
     * [Исходный код тестов](java/wordStat/WordStatFirstIndexTest.java)
     * [Откомпилированные тесты](artifacts/wordStat/WordStatFirstIndexTest.jar)
+ * *LastIndex*
+    * Вместо номеров вхождений во всем файле надо указывать
+      только последнее вхождение в каждой строке
+    * Класс должен иметь имя `WordStatLastIndex`
+    * [Исходный код тестов](java/wordStat/WordStatLastIndexTest.java)
+    * [Откомпилированные тесты](artifacts/wordStat/WordStatLastIndexTest.jar)
 
 Исходный код тестов:
 
