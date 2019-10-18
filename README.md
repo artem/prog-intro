@@ -34,6 +34,13 @@
     * Класс должен иметь имя `WordStatLastIndex`
     * [Исходный код тестов](java/wordStat/WordStatLastIndexTest.java)
     * [Откомпилированные тесты](artifacts/wordStat/WordStatLastIndexTest.jar)
+ * *SortedLastIndex*
+    * В выходном файле слова должны быть упорядочены в лексикографическом порядке
+    * Вместо номеров вхождений во всем файле надо указывать
+      только последнее вхождение в каждой строке
+    * Класс должен иметь имя `WordStatSortedLastIndex`
+    * [Исходный код тестов](java/wordStat/WordStatSortedLastIndexTest.java)
+    * [Откомпилированные тесты](artifacts/wordStat/WordStatSortedLastIndexTest.jar)
 
 Исходный код тестов:
 
