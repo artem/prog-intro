@@ -3,6 +3,15 @@
 [Условия домашних заданий](http://www.kgeorgiy.info/courses/prog-intro/homeworks.html)
 
 
+Домашнее задание 7. Разметка
+----
+
+Исходный код тестов:
+
+ * [MarkdownTest.java](java/markup/MarkdownTest.java)
+ * [AbstractTest.java](java/markup/AbstractTest.java)
+
+
 Домашнее задание 6. Подсчет слов++
 ----
 Модификации
@@ -13,6 +22,25 @@
     * Класс должен иметь имя `WordStatLineIndex`
     * [Исходный код тестов](java/wordStat/WordStatLineIndexTest.java)
     * [Откомпилированные тесты](artifacts/wordStat/WordStatLineIndexTest.jar)
+ * *FirstIndex*
+    * Вместо номеров вхождений во всем файле надо указывать
+      только первое вхождение в каждой строке
+    * Класс должен иметь имя `WordStatFirstIndex`
+    * [Исходный код тестов](java/wordStat/WordStatFirstIndexTest.java)
+    * [Откомпилированные тесты](artifacts/wordStat/WordStatFirstIndexTest.jar)
+ * *LastIndex*
+    * Вместо номеров вхождений во всем файле надо указывать
+      только последнее вхождение в каждой строке
+    * Класс должен иметь имя `WordStatLastIndex`
+    * [Исходный код тестов](java/wordStat/WordStatLastIndexTest.java)
+    * [Откомпилированные тесты](artifacts/wordStat/WordStatLastIndexTest.jar)
+ * *SortedLastIndex*
+    * В выходном файле слова должны быть упорядочены в лексикографическом порядке
+    * Вместо номеров вхождений во всем файле надо указывать
+      только последнее вхождение в каждой строке
+    * Класс должен иметь имя `WordStatSortedLastIndex`
+    * [Исходный код тестов](java/wordStat/WordStatSortedLastIndexTest.java)
+    * [Откомпилированные тесты](artifacts/wordStat/WordStatSortedLastIndexTest.jar)
 
 Исходный код тестов:
 
