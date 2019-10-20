@@ -23,6 +23,7 @@ public class FastScanner implements AutoCloseable {
         this.reader = new BufferedReader(new InputStreamReader(stream, "utf8"));
     }
 
+    @Override
     public void close() throws IOException {
         this.reader.close();
     }
@@ -109,13 +110,6 @@ public class FastScanner implements AutoCloseable {
 
         buffer = next();
 
-        /*for (int i = 0; i < buffer.length(); i++) {
-            char c = buffer.charAt(i);
-            if (!Character.isDigit(c) && c != '-' && c != '+') {
-                return false;
-            }
-        }*/
-
         try {
             cachedInt = Integer.parseInt(buffer);
             return true;
@@ -135,10 +129,11 @@ public class FastScanner implements AutoCloseable {
     }
 
     public boolean hasNext() throws IOException {
-        int cur;
         if (cachedNext != null) {
             return true;
         }
+
+        int cur;
 
         while (true) {
             cur = reader.read();
