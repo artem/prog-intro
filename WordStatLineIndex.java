@@ -2,43 +2,37 @@ import java.io.*;
 import java.util.*;
 
 public class WordStatLineIndex {
-    private static void parseLine(String line, Map<String, List<int[]>> list, int idxStr) {
+    private static void parseLine(String line, Map<String, List<TextPos>> list, int idxStr) {
         FastScanner sc = new FastScanner(line);
         int idxWord = 1;
 
         try {
             while (sc.hasNextWord()) {
                 String word = sc.nextWord().toLowerCase();
-                List<int[]> chain = list.getOrDefault(word, new LinkedList<int[]>());
+                List<TextPos> chain = list.getOrDefault(word, new ArrayList<TextPos>());
 
-                int[] wordPos = new int[] {idxStr, idxWord++};
-                chain.add(wordPos);
+                chain.add(new TextPos(idxStr, idxWord++));
                 list.put(word, chain);
             }
         } catch (IOException e) {
             System.err.println("I/O error during reading console input: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
     public static void main(String[] args) {
-        NavigableMap<String, List<int[]>> statWords = new TreeMap<>();
+        NavigableMap<String, List<TextPos>> statWords = new TreeMap<>();
 
         if (args.length != 2) {
             System.err.println("Usage: Word <input file> <output file>");
             return;
         }
 
-        try {
-            FastScanner sc = new FastScanner(new File(args[0]));
+        try (FastScanner sc = new FastScanner(new File(args[0]))) {
+            int idx = 1;
 
-            try {
-                int idx = 1;
-
-                while (sc.hasNextLine()) {
-                    parseLine(sc.nextLine(), statWords, idx++);
-                }
-            } finally {
-                sc.close();
+            while (sc.hasNextLine()) {
+                parseLine(sc.nextLine(), statWords, idx++);
             }
         } catch (FileNotFoundException e) {
             System.err.println("Input file not found: " + e.getMessage());
@@ -49,20 +43,22 @@ public class WordStatLineIndex {
             e.printStackTrace();
         }
 
-        try {
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[1]), "utf8"));
-            try {
-                for (Map.Entry<String, List<int[]>> pair : statWords.entrySet()) {
-                    writer.write(pair.getKey() + " " + pair.getValue().size());
+        try (BufferedWriter writer = new BufferedWriter(
+                new OutputStreamWriter(new FileOutputStream(args[1]), "utf8"))) {
+            for (Map.Entry<String, List<TextPos>> pair : statWords.entrySet()) {
+                writer.write(pair.getKey() + " " + pair.getValue().size());
 
-                    for (int[] pos : pair.getValue()) {
-                        writer.write(" " + pos[0] + ":" + pos[1]);
-                    }
-                    writer.newLine();
+                for (TextPos pos : pair.getValue()) {
+                    writer.write(" " + pos.getLineNumber() + ":" + pos.getWordNumber());
                 }
-            } finally {
-                writer.close();
+                writer.newLine();
             }
+        } catch (FileNotFoundException e) {
+            System.err.println("Can't open output file for writing: " + e.getMessage());
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            System.err.println("Unsupported output encoding: " + e.getMessage());
+            e.printStackTrace();
         } catch (IOException e) {
             System.err.println("IOException during write: " + e.getMessage());
             e.printStackTrace();

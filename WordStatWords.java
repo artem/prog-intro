@@ -14,35 +14,33 @@ public class WordStatWords {
             return;
         }
 
-        try {
-            FastScanner sc = new FastScanner(new File(args[0]));
-
-            try {
-                while (sc.hasNextWord()) {
-                    addToStats(sc.nextWord().toLowerCase(), statWords);
-                }
-            } finally {
-                sc.close();
+        try (FastScanner sc = new FastScanner(new File(args[0]))) {
+            while (sc.hasNextWord()) {
+                addToStats(sc.nextWord().toLowerCase(), statWords);
             }
         } catch (FileNotFoundException e) {
             System.err.println("Input file not found: " + e.getMessage());
+            e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
             System.err.println("Unsupported input encoding: " + e.getMessage());
+            e.printStackTrace();
         } catch (IOException e) {
             System.err.println("IOException during read: " + e.getMessage());
             e.printStackTrace();
         }
 
-        try {
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[1]), "utf8"));
-            try {
-                for (Map.Entry<String, Integer> pair : statWords.entrySet()) {
-                    writer.write(pair.getKey() + " " + pair.getValue());
-                    writer.newLine();
-                }
-            } finally {
-                writer.close();
+        try (BufferedWriter writer = new BufferedWriter(
+                new OutputStreamWriter(new FileOutputStream(args[1]), "utf8"))) {
+            for (Map.Entry<String, Integer> pair : statWords.entrySet()) {
+                writer.write(pair.getKey() + " " + pair.getValue());
+                writer.newLine();
             }
+        } catch (FileNotFoundException e) {
+            System.err.println("Can't open output file for writing: " + e.getMessage());
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            System.err.println("Unsupported output encoding: " + e.getMessage());
+            e.printStackTrace();
         } catch (IOException e) {
             System.err.println("IOException during write: " + e.getMessage());
             e.printStackTrace();

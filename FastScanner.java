@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class FastScanner {
+public class FastScanner implements AutoCloseable {
     private final BufferedReader reader;
 
     private String cachedNext;
