@@ -2,14 +2,6 @@ import java.io.*;
 import java.util.*;
 
 public class WordStatWords {
-    private static boolean isWordChar(char c) {
-        boolean isLetter = Character.isLetter(c);
-        boolean isDash = Character.getType(c) == Character.DASH_PUNCTUATION;
-        boolean isApostrophe = c == '\'';
-
-        return isLetter || isDash || isApostrophe;
-    }
-
     private static void addToStats(String word, Map<String, Integer> list) {
         list.put(word, list.getOrDefault(word, 0) + 1);
     }

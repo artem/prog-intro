@@ -54,7 +54,7 @@ public class FastScanner {
         return isLetter || isDash || isApostrophe;
     }
 
-    public boolean hasNextWord() {
+    public boolean hasNextWord() throws IOException {
         boolean empty = true;
 
         if (cachedWord != null && cachedWord.size() > 0) {
@@ -88,7 +88,7 @@ public class FastScanner {
         return false;
     }
 
-    public String nextWord() {
+    public String nextWord() throws IOException {
         if (!hasNextWord()) {
             throw new NoSuchElementException("No words in stream!");
         }
@@ -96,7 +96,7 @@ public class FastScanner {
         return cachedWord.remove();
     }
 
-    public boolean hasNextInt() {
+    public boolean hasNextInt() throws IOException {
         String buffer;
 
         if (cachedInt != null) {
@@ -124,7 +124,7 @@ public class FastScanner {
         }
     }
 
-    public Integer nextInt() {
+    public Integer nextInt() throws IOException {
         if (!hasNextInt()) {
             throw new NoSuchElementException("No integers in stream!");
         }
@@ -134,46 +134,34 @@ public class FastScanner {
         return ret;
     }
 
-    public boolean hasNext() {
+    public boolean hasNext() throws IOException {
         int cur;
-        StringBuilder str;
-
         if (cachedNext != null) {
             return true;
         }
 
-        try {
-            while (true) {
-                cur = reader.read();
+        while (true) {
+            cur = reader.read();
 
-                if (cur == -1) {
-                    return false;
-                } else if (!Character.isWhitespace(cur)) {
-                    break;
-                }
+            if (cur == -1) {
+                return false;
+            } else if (!Character.isWhitespace(cur)) {
+                break;
             }
-
-            str = new StringBuilder();
-            str.append((char)cur);
-
-            while (true) {
-                cur = reader.read();
-
-                if (cur == -1 || Character.isWhitespace(cur)) {
-                    break;
-                }
-                str.append((char)cur);
-            }
-
-            cachedNext = str.toString();
-            return true;
-        } catch (IOException e) {
-            System.err.println("IOException during read: " + e.getMessage());
-            return false;
         }
+
+        StringBuilder str = new StringBuilder();
+
+        do {
+            str.append((char)cur);
+            cur = reader.read();
+        } while (cur != -1 && !Character.isWhitespace(cur));
+
+        cachedNext = str.toString();
+        return true;
     }
 
-    public String next() {
+    public String next() throws IOException {
         if (!hasNext()) {
             throw new NoSuchElementException("No tokens in stream!");
         }

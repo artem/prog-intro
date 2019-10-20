@@ -6,13 +6,17 @@ public class WordStatLineIndex {
         FastScanner sc = new FastScanner(line);
         int idxWord = 1;
 
-        while (sc.hasNextWord()) {
-            String word = sc.nextWord().toLowerCase();
-            List<int[]> chain = list.getOrDefault(word, new LinkedList<int[]>());
+        try {
+            while (sc.hasNextWord()) {
+                String word = sc.nextWord().toLowerCase();
+                List<int[]> chain = list.getOrDefault(word, new LinkedList<int[]>());
 
-            int[] wordPos = new int[] {idxStr, idxWord++};
-            chain.add(wordPos);
-            list.put(word, chain);
+                int[] wordPos = new int[] {idxStr, idxWord++};
+                chain.add(wordPos);
+                list.put(word, chain);
+            }
+        } catch (IOException e) {
+            System.err.println("I/O error during reading console input: " + e.getMessage());
         }
     }
 

@@ -6,15 +6,19 @@ public class ReverseTranspose {
         FastScanner sc = new FastScanner(nums);
 
         int idx = 0;
-        while (sc.hasNextInt()) {
-            int num = sc.nextInt();
+        try {
+            while (sc.hasNextInt()) {
+                int num = sc.nextInt();
 
-            if (idx >= matrix.size()) {
-                matrix.add(new ArrayList<Integer>());
+                if (idx >= matrix.size()) {
+                    matrix.add(new ArrayList<Integer>());
+                }
+                matrix.get(idx).add(num);
+
+                idx++;
             }
-            matrix.get(idx).add(num);
-
-            idx++;
+        } catch (IOException e) {
+            System.err.println("I/O error during reading console input: " + e.getMessage());
         }
     }
 
