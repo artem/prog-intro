@@ -3,7 +3,7 @@ package markup;
 import java.util.List;
 
 public class Strong extends TextDecoration {
-    protected Strong(List<IMarkdown> content) {
-        super(content, "__");
+    protected Strong(List<IRichText> content) {
+        super(content, "__", "strong");
     }
 }

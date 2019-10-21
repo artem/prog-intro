@@ -6,7 +6,7 @@ import java.util.Map;
  * @author Georgiy Korneev (kgeorgiy@kgeorgiy.info)
  */
 public class HtmlTest extends MarkdownTest {
-    private static final Map<String, String> HTML = Map.of(
+    private static final Map<String, String> Html = Map.of(
             "*<", "<em>",
             "*>", "</em>",
             "__<", "<strong>",
@@ -22,6 +22,6 @@ public class HtmlTest extends MarkdownTest {
     @Override
     protected void test(final Paragraph paragraph, final String expected) {
         super.test(paragraph, expected);
-        test(paragraph::toHtml, expected, HTML);
+        test(paragraph::toHtml, expected, Html);
     }
 }
