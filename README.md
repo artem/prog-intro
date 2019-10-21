@@ -109,10 +109,10 @@
 
 Исходный код тестов:
 
-* [WordStatInputTest.java](java/wordStat/WordStatWordsTest.java)
+* [WordStatInputTest.java](java/wordStat/WordStatInputTest.java)
 * [WordStatChecker.java](java/wordStat/WordStatChecker.java)
 
-Откомпилированные тесты: [WordStatWordsTest.jar](artifacts/wordStat/WordStatWordsTest.jar)
+Откомпилированные тесты: [WordStatInputTest.jar](artifacts/wordStat/WordStatInputTest.jar)
 
 
 ## Домашнее задание 3. Реверс
