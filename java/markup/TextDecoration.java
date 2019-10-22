@@ -3,23 +3,19 @@ package markup;
 import java.util.List;
 
 public abstract class TextDecoration implements IRichText {
-    private final String mdSep;
-    private final String htmlSep;
     private final List<IRichText> content;
 
-    protected TextDecoration(List<IRichText> content, String mdSep, String htmlSep) {
-        this.mdSep = mdSep;
-        this.htmlSep = htmlSep;
+    protected TextDecoration(List<IRichText> content) {
         this.content = content;
     }
 
     @Override
     public void toMarkdown(StringBuilder result) {
-        result.append(mdSep);
+        result.append(getMdMark());
         for (IRichText node : content) {
             node.toMarkdown(result);
         }
-        result.append(mdSep);
+        result.append(getMdMark());
     }
 
     @Override
@@ -32,22 +28,25 @@ public abstract class TextDecoration implements IRichText {
     }
 
     private String htmlOpeningTag() {
-        if (!htmlSep.isEmpty()) {
-            return "<" + htmlSep + ">"; 
+        String tag = getHtmlTag();
+
+        if (!tag.isEmpty()) {
+            return "<" + tag + ">";
         }
 
         return "";
     }
 
     private String htmlClosingTag() {
-        if (!htmlSep.isEmpty()) {
-            return "</" + htmlSep + ">"; 
+        String tag = getHtmlTag();
+
+        if (!tag.isEmpty()) {
+            return "</" + tag + ">";
         }
 
         return "";
     }
 
-    protected void handleMdNodes(StringBuilder result) {
-        
-    }
+    protected abstract String getMdMark();
+    protected abstract String getHtmlTag();
 }
