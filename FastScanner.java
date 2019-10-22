@@ -56,7 +56,6 @@ public class FastScanner implements AutoCloseable {
     }
 
     public boolean hasNextWord() throws IOException {
-        boolean empty = true;
 
         if (cachedWord != null && cachedWord.size() > 0) {
             return true;
@@ -66,6 +65,7 @@ public class FastScanner implements AutoCloseable {
 
         while (hasNext()) {
             String buffer = next();
+            //boolean empty = true;
 
             for (int i = 0; i < buffer.length(); i++) {
                 int idxStart = i;
@@ -76,11 +76,11 @@ public class FastScanner implements AutoCloseable {
 
                 if (idxStart < i) {
                     queue.add(buffer.substring(idxStart, i));
-                    empty = false;
+              //      empty = false;
                 }
             }
 
-            if (!empty) {
+            if (!queue.isEmpty()) {
                 cachedWord = queue;
                 return true;
             }
@@ -148,7 +148,7 @@ public class FastScanner implements AutoCloseable {
         StringBuilder str = new StringBuilder();
 
         do {
-            str.append((char)cur);
+            str.append((char) cur);
             cur = reader.read();
         } while (cur != -1 && !Character.isWhitespace(cur));
 
