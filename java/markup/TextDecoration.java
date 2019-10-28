@@ -11,40 +11,33 @@ public abstract class TextDecoration implements IRichText {
 
     @Override
     public void toMarkdown(StringBuilder result) {
-        result.append(getMdMark());
+        String mark = getMdMark();
+
+        result.append(mark);
+
         for (IRichText node : content) {
             node.toMarkdown(result);
         }
-        result.append(getMdMark());
+
+        result.append(mark);
     }
 
     @Override
     public void toHtml(StringBuilder result) {
-        result.append(htmlOpeningTag());
+        String tag = getHtmlTag();
+        boolean empty = tag.isEmpty();
+
+        if (!empty) {
+            result.append("<").append(tag).append(">");
+        }
+
         for (IRichText node : content) {
             node.toHtml(result);
         }
-        result.append(htmlClosingTag());
-    }
 
-    private String htmlOpeningTag() {
-        String tag = getHtmlTag();
-
-        if (!tag.isEmpty()) {
-            return "<" + tag + ">";
+        if (!empty) {
+            result.append("</").append(tag).append(">");
         }
-
-        return "";
-    }
-
-    private String htmlClosingTag() {
-        String tag = getHtmlTag();
-
-        if (!tag.isEmpty()) {
-            return "</" + tag + ">";
-        }
-
-        return "";
     }
 
     protected abstract String getMdMark();
