@@ -3,6 +3,13 @@
 [Условия домашних заданий](http://www.kgeorgiy.info/courses/prog-intro/homeworks.html)
 
 
+## Домашнее задание 8. Markdown to HTML
+
+Исходный код тестов: [Md2HtmlTest.java](java/md2html/Md2HtmlTest.java)
+
+Откомпилированные тесты: [Md2HtmlTest.jar](artifacts/md2html/Md2HtmlTest.jar)
+
+
 ## Домашнее задание 7. Разметка
 
 Модификации
