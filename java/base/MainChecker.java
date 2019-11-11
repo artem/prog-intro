@@ -75,7 +75,11 @@ public class MainChecker extends Randomized {
         counter.passed();
     }
 
+    public void printStatus(Class<?> aClass) {
+        counter.printStatus(aClass);
+    }
+
     public void printStatus() {
-        counter.printStatus(getClass());
+        printStatus(getClass());
     }
 }
