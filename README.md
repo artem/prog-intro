@@ -5,6 +5,12 @@
 
 ## Домашнее задание 8. Markdown to HTML
 
+Модификации
+ * *Underline*
+    * Добавьте поддержку `++подчеркивания++`: `<u>подчеркивания</u>`
+    * [Исходный код тестов](java/md2html/Md2HtmlUnderlineTest.java)
+    * [Откомпилированные тесты](artifacts/md2html/Md2HtmlUnderlineTest.jar)
+
 Исходный код тестов: [Md2HtmlTest.java](java/md2html/Md2HtmlTest.java)
 
 Откомпилированные тесты: [Md2HtmlTest.jar](artifacts/md2html/Md2HtmlTest.jar)
