@@ -3,13 +3,20 @@
 [Условия домашних заданий](http://www.kgeorgiy.info/courses/prog-intro/homeworks.html)
 
 
-## Домашнее задание 8. Markdown to HTML
+## Домашнее задание 9. Markdown to HTML
 
 Модификации
  * *Underline*
     * Добавьте поддержку `++подчеркивания++`: `<u>подчеркивания</u>`
     * [Исходный код тестов](java/md2html/Md2HtmlUnderlineTest.java)
     * [Откомпилированные тесты](artifacts/md2html/Md2HtmlUnderlineTest.jar)
+
+ * *Link*
+    * Добавьте поддержку ```[ссылок с _выделением_](https://kgeorgiy.info)```:
+        ```&lt;a href='https://kgeorgiy.info'>ссылок с &lt;em>выделением&lt;/em>&lt;/a>```
+    * [Исходный код тестов](java/md2html/Md2HtmlLinkTest.java)
+    * [Откомпилированные тесты](artifacts/md2html/Md2HtmlLinkTest.jar)
+
 
 Исходный код тестов: [Md2HtmlTest.java](java/md2html/Md2HtmlTest.java)
 
