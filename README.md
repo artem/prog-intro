@@ -16,6 +16,10 @@
         ```&lt;a href='https://kgeorgiy.info'>ссылок с &lt;em>выделением&lt;/em>&lt;/a>```
     * [Исходный код тестов](java/md2html/Md2HtmlLinkTest.java)
     * [Откомпилированные тесты](artifacts/md2html/Md2HtmlLinkTest.jar)
+ * *Mark*
+    * Добавьте поддержку `~выделения цветом~`: `<mark>выделения цветом</mark>`
+    * [Исходный код тестов](java/md2html/Md2HtmlMarkTest.java)
+    * [Откомпилированные тесты](artifacts/md2html/Md2HtmlMarkTest.jar)
 
 
 Исходный код тестов: [Md2HtmlTest.java](java/md2html/Md2HtmlTest.java)
