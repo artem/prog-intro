@@ -15,7 +15,8 @@ public class MDParser {
                 "**", "strong",
                 "__", "strong",
                 "--", "s",
-                "`", "code");
+                "`", "code",
+                "++", "u");
 
         //TODO intelligent auto heading
         paragraphs = Map.of("# ", "h1",
