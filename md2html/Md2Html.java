@@ -8,10 +8,20 @@ public class Md2Html {
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(new FileInputStream(args[0]), "utf8")
         )) {
+            StringBuilder paragraph = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
-                pr.append(line);
+                if (line.isEmpty()) {
+                    pr.append(paragraph.toString());
+                    paragraph = new StringBuilder();
+                } else {
+                    if (paragraph.length() > 0) {
+                        paragraph.append('\n');
+                    }
+                    paragraph.append(line);
+                }
             }
+            pr.append(paragraph.toString());
         } catch (FileNotFoundException e) {
             System.out.println("Input file not found: " + e.getMessage());
             e.printStackTrace();

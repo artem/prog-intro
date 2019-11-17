@@ -79,38 +79,36 @@ public class MDParser {
         }
     }
 
-    public void append(String line) {
+    public void append(String paragraph) {
         offset = 0;
-        if (line.isEmpty()) {
-            closeParagraph();
+        if (paragraph.isEmpty()) {
             return;
         }
-        if (result.length() > 0) {
-            result.append('\n');
-        }
 
-        openParagraph(line);
-        result.append(parseText(line));
+        openParagraph(paragraph);
+        result.append(parseText(paragraph));
+        closeParagraph();
+        result.append('\n');
     }
 
-    private StringBuilder parseText(String line) {
+    private StringBuilder parseText(String paragraph) {
         StringBuilder buffer = new StringBuilder();
 
         outer:
-        for (; offset < line.length(); ) {
-            char cur = line.charAt(offset);
+        while (offset < paragraph.length()) {
+            char cur = paragraph.charAt(offset);
 
             if (cur == '\\') {
-                if (offset + 1 < line.length()) {
-                    append(line.charAt(++offset), buffer);
+                if (offset + 1 < paragraph.length()) {
+                    append(paragraph.charAt(++offset), buffer);
                     offset++;
                     continue;
                 }
             }
 
             String tag;
-            for (int j = Math.min(line.length() - offset, 2); j > 0; j--) {
-                String mdFlag = line.substring(offset, offset + j);
+            for (int j = Math.min(paragraph.length() - offset, 2); j > 0; j--) {
+                String mdFlag = paragraph.substring(offset, offset + j);
                 if ((tag = decorators.get(mdFlag)) != null) {
                     offset += j;
                     if (tagStack.size() > 0 && tagStack.peek().equals(mdFlag)) {
@@ -118,13 +116,13 @@ public class MDParser {
                         return closeTag(tag, openTag(tag, new StringBuilder()).append(buffer));
                     } else {
                         tagStack.push(mdFlag);
-                        buffer.append(parseText(line));
+                        buffer.append(parseText(paragraph));
                     }
                     continue outer;
                 }
             }
 
-            append(line.charAt(offset++), buffer);
+            append(paragraph.charAt(offset++), buffer);
         }
         if (tagStack.size() > 0) {
             buffer.insert(0, tagStack.pop());
