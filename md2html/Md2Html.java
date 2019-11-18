@@ -5,9 +5,8 @@ import java.io.*;
 public class Md2Html {
     public static void main(String[] args) {
         MDParser pr = new MDParser();
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(args[0]), "utf8")
-        )) {
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(args[0]), "utf8"))) {
             StringBuilder paragraph = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
@@ -30,14 +29,17 @@ public class Md2Html {
             e.printStackTrace();
         }
 
-        try {
-            PrintWriter writer = new PrintWriter(args[1]);
-            String out = pr.toString();
-            writer.write(out);
-            writer.close();
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[1]), "utf8"))) {
+            writer.write(pr.toString());
         } catch (FileNotFoundException e) {
+            System.err.println("Can't open output file for writing: " + e.getMessage());
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            System.err.println("Unsupported output encoding: " + e.getMessage());
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.err.println("IOException during write: " + e.getMessage());
             e.printStackTrace();
         }
-
     }
 }

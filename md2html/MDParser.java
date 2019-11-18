@@ -6,10 +6,12 @@ import java.util.Map;
 
 public class MDParser {
     private static final Map<String, String> decorators;
-    private static final Map<String, String> paragraphs;
     private static final Map<Character, String> htmlSymbols;
+    private static final int MAX_MARKER_LENGTH;
 
     static {
+        MAX_MARKER_LENGTH = 2;
+
         decorators = Map.of("*", "em",
                 "_", "em",
                 "**", "strong",
@@ -17,14 +19,6 @@ public class MDParser {
                 "--", "s",
                 "`", "code",
                 "++", "u");
-
-        //TODO intelligent auto heading
-        paragraphs = Map.of("# ", "h1",
-                "## ", "h2",
-                "### ", "h3",
-                "#### ", "h4",
-                "##### ", "h5",
-                "###### ", "h6");
 
         htmlSymbols = Map.of('<', "&lt;",
                 '>', "&gt;",
@@ -34,11 +28,12 @@ public class MDParser {
     private final StringBuilder result;
     private final Deque<String> tagStack;
     private int offset;
-    private String paragraph;
+    private int headerLevel;
 
     public MDParser() {
         result = new StringBuilder();
         tagStack = new ArrayDeque<>();
+        headerLevel = -1;
     }
 
     private static String symbolToHtml(char c) {
@@ -53,30 +48,44 @@ public class MDParser {
         return res.append("</").append(tag).append(">");
     }
 
+    private String getHeaderTag() {
+        if (headerLevel > 0) {
+            return "h" + headerLevel;
+        } else {
+            return "p";
+        }
+    }
+
     private void openParagraph(String line) {
-        if (paragraph != null) {
+        if (headerLevel != -1) {
             return;
         }
+        headerLevel = 0;
 
-        paragraph = "p";
+        for (int i = 0; i < line.length(); i++) {
+            char tmp = line.charAt(i);
 
-        //TODO intelligent auto heading
-        for (Map.Entry<String, String> parDetect : paragraphs.entrySet()) {
-            if (line.startsWith(parDetect.getKey())) {
-                String tag = parDetect.getValue();
-                paragraph = tag;
-                offset += parDetect.getKey().length();
-                break;
+            if (tmp == '#') {
+                headerLevel++;
+                offset++;
+                continue;
+            } else if (i > 0 && tmp == ' ') {
+                offset++;
+            } else {
+                headerLevel = 0;
+                offset = 0;
             }
+
+            break;
         }
 
-        openTag(paragraph, result);
+        openTag(getHeaderTag(), result);
     }
 
     private void closeParagraph() {
-        if (paragraph != null) {
-            closeTag(paragraph, result);
-            paragraph = null;
+        if (headerLevel != -1) {
+            closeTag(getHeaderTag(), result);
+            headerLevel = -1;
         }
     }
 
@@ -108,26 +117,31 @@ public class MDParser {
             }
 
             String tag;
-            for (int j = Math.min(paragraph.length() - offset, 2); j > 0; j--) {
+
+            for (int j = Math.min(paragraph.length() - offset, MAX_MARKER_LENGTH); j > 0; j--) {
                 String mdFlag = paragraph.substring(offset, offset + j);
+
                 if ((tag = decorators.get(mdFlag)) != null) {
                     offset += j;
                     if (tagStack.size() > 0 && tagStack.peek().equals(mdFlag)) {
                         tagStack.pop();
-                        return closeTag(tag, openTag(tag, new StringBuilder()).append(buffer));
+                        return closeTag(tag, openTag(tag, new StringBuilder()).append(buffer)); // returns <tag> ... buffer ...</tag>
                     } else {
                         tagStack.push(mdFlag);
                         buffer.append(parseText(paragraph));
                     }
+
                     continue outer;
                 }
             }
 
             append(paragraph.charAt(offset++), buffer);
         }
+
         if (tagStack.size() > 0) {
             buffer.insert(0, tagStack.pop());
         }
+
         return buffer;
     }
 
@@ -137,10 +151,6 @@ public class MDParser {
 
     @Override
     public String toString() {
-        String res = result.toString();
-        if (paragraph != null) {
-            res += "</" + paragraph + ">";
-        }
-        return res;
+        return result.toString();
     }
 }
