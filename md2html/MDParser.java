@@ -5,25 +5,17 @@ import java.util.Deque;
 import java.util.Map;
 
 public class MDParser {
-    private static final Map<String, String> decorators;
-    private static final Map<Character, String> htmlSymbols;
-    private static final int MAX_MARKER_LENGTH;
-
-    static {
-        MAX_MARKER_LENGTH = 2;
-
-        decorators = Map.of("*", "em",
+    private static final Map<String, String> decorators = Map.of("*", "em",
                 "_", "em",
                 "**", "strong",
                 "__", "strong",
                 "--", "s",
                 "`", "code",
                 "++", "u");
-
-        htmlSymbols = Map.of('<', "&lt;",
+    private static final Map<Character, String> htmlSymbols = Map.of('<', "&lt;",
                 '>', "&gt;",
                 '&', "&amp;");
-    }
+    private static final int MAX_MARKER_LENGTH = 2;
 
     private final StringBuilder result;
     private final Deque<String> tagStack;
@@ -48,12 +40,8 @@ public class MDParser {
         return res.append("</").append(tag).append(">");
     }
 
-    private String getHeaderTag() {
-        if (headerLevel > 0) {
-            return "h" + headerLevel;
-        } else {
-            return "p";
-        }
+    private String getHeaderTag(int headerLevel) {
+        return headerLevel > 0 ? "h" + headerLevel : "p";
     }
 
     private void openParagraph(String line) {
@@ -68,23 +56,23 @@ public class MDParser {
             if (tmp == '#' && i != line.length() - 1) {
                 headerLevel++;
                 offset++;
-                continue;
             } else if (i > 0 && tmp == ' ') {
                 offset++;
+                break;
             } else {
                 headerLevel = 0;
                 offset = 0;
+                break;
             }
 
-            break;
         }
 
-        openTag(getHeaderTag(), result);
+        openTag(getHeaderTag(headerLevel), result);
     }
 
     private void closeParagraph() {
         if (headerLevel != -1) {
-            closeTag(getHeaderTag(), result);
+            closeTag(getHeaderTag(headerLevel), result);
             headerLevel = -1;
         }
     }
@@ -116,12 +104,12 @@ public class MDParser {
                 }
             }
 
-            String tag;
 
             for (int j = Math.min(paragraph.length() - offset, MAX_MARKER_LENGTH); j > 0; j--) {
                 String mdFlag = paragraph.substring(offset, offset + j);
 
-                if ((tag = decorators.get(mdFlag)) != null) {
+                String tag = decorators.get(mdFlag);
+                if (tag != null) {
                     offset += j;
                     if (tagStack.size() > 0 && tagStack.peek().equals(mdFlag)) {
                         tagStack.pop();
