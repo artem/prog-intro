@@ -65,7 +65,7 @@ public class MDParser {
         for (int i = 0; i < line.length(); i++) {
             char tmp = line.charAt(i);
 
-            if (tmp == '#') {
+            if (tmp == '#' && i != line.length() - 1) {
                 headerLevel++;
                 offset++;
                 continue;
