@@ -110,8 +110,8 @@ public class MDParser {
 
             if (cur == '\\') {
                 if (offset + 1 < paragraph.length()) {
-                    append(paragraph.charAt(++offset), buffer);
-                    offset++;
+                    appendChar(paragraph.charAt(offset + 1), buffer);
+                    offset += 2;
                     continue;
                 }
             }
@@ -135,7 +135,7 @@ public class MDParser {
                 }
             }
 
-            append(paragraph.charAt(offset++), buffer);
+            appendChar(paragraph.charAt(offset++), buffer);
         }
 
         if (tagStack.size() > 0) {
@@ -145,7 +145,7 @@ public class MDParser {
         return buffer;
     }
 
-    public void append(char c, StringBuilder res) {
+    private void appendChar(char c, StringBuilder res) {
         res.append(symbolToHtml(c));
     }
 
