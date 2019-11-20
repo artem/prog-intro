@@ -26,7 +26,6 @@
     * [Исходный код тестов](java/md2html/Md2HtmlImageTest.java)
     * [Откомпилированные тесты](artifacts/md2html/Md2HtmlImageTest.jar)
 
-
 Исходный код тестов: [Md2HtmlTest.java](java/md2html/Md2HtmlTest.java)
 
 Откомпилированные тесты: [Md2HtmlTest.jar](artifacts/md2html/Md2HtmlTest.jar)
