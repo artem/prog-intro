@@ -25,7 +25,7 @@ public class Asserts {
 
     public static void assertTrue(final String message, final boolean value) {
         if (!value) {
-            throw new AssertionError(message);
+            throw error("%s", message);
         }
     }
 
@@ -39,5 +39,15 @@ public class Asserts {
 
     public static void assertSame(final String message, final Object expected, final Object actual) {
         assertTrue(String.format("%s: expected same objects: %s and %s", message, expected, actual), expected == actual);
+    }
+
+    protected static void checkAssert(final Class<?> c) {
+        if (!c.desiredAssertionStatus()) {
+            throw error("You should enable assertions by running 'java -ea %s'", c.getName());
+        }
+    }
+
+    public static AssertionError error(final String format, final Object... args) {
+        return new AssertionError(String.format(format, args));
     }
 }
