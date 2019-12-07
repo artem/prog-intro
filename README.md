@@ -2,6 +2,17 @@
 
 [Условия домашних заданий](http://www.kgeorgiy.info/courses/prog-intro/homeworks.html)
 
+## Домашнее задание 12. Разбор выражений
+
+Модификации
+ * *Базовая*
+    * Класс `ExpressionParser` должен реализовывать интерфейс
+        [Parser](java/expression/parser/Parser.java)
+    * Результат разбора должен реализовывать интерфейс
+        [TripleExpression](java/expression/TripleExpression.java)
+    * [Исходный код тестов](java/expression/parser/ParserTest.java)
+
+
 ## Домашнее задание 11. Выражения
 
 Модификации
@@ -12,6 +23,9 @@
  * *Double*
     * Дополнительно реализуйте интерфейс [DoubleExpression](java/expression/DoubleExpression.java)
     * [Исходный код тестов](java/expression/DoubleExpressionTest.java)
+ * *Triple*
+    * Дополнительно реализуйте интерфейс [TripleExpression](java/expression/TripleExpression.java)
+    * [Исходный код тестов](java/expression/TripleExpressionTest.java)
 
 
 ## Домашнее задание 10. Игра n,m,k
@@ -28,6 +42,9 @@
     * Добавьте возможность игры для 3 и 4 игроков
  * *Ромб*
     * Добавить поддержку доски в форме ромба
+ * *Матчи*
+    * Добавьте поддержку матчей: последовательность игр указанного числа побед
+    * Стороны в матче должны меняться каждую игру
 
 ## Домашнее задание 9. Markdown to HTML
 
