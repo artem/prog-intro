@@ -1,7 +1,7 @@
 package expression;
 
 public class Divide extends BinaryOperation {
-    protected Divide(Evaluable arg1, Evaluable arg2) {
+    protected Divide(CommonExpression arg1, CommonExpression arg2) {
         super(arg1, arg2);
     }
 

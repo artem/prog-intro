@@ -2,7 +2,7 @@ package expression;
 
 import java.util.Objects;
 
-public class Const extends Evaluable {
+public class Const extends CommonExpression {
     private final Number value;
 
     public Const(Number value) {
