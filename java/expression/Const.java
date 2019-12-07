@@ -2,16 +2,13 @@ package expression;
 
 public class Const extends Evaluable {
     private final double value;
-    private final boolean integer;
 
     public Const(int value) {
         this.value = value;
-        this.integer = true;
     }
 
     public Const(double value) {
         this.value = value;
-        this.integer = false;
     }
 
     @Override
@@ -31,7 +28,7 @@ public class Const extends Evaluable {
 
     @Override
     public String toString() {
-        if (integer) {
+        if (value % 1 == 0) {
             return String.valueOf((int)value);
         } else {
             return String.valueOf(value);
@@ -42,7 +39,7 @@ public class Const extends Evaluable {
     public boolean equals(Object obj) {
         if (obj instanceof Const) {
             Const second = (Const) obj;
-            return value == second.value && integer == second.integer;
+            return value == second.value;
         } else {
             return false;
         }
