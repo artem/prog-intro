@@ -1,24 +1,22 @@
 package expression;
 
+import java.util.Objects;
+
 public class Const extends Evaluable {
-    private final double value;
+    private final Number value;
 
-    public Const(int value) {
-        this.value = value;
-    }
-
-    public Const(double value) {
+    public Const(Number value) {
         this.value = value;
     }
 
     @Override
     public int evaluate(int x) {
-        return (int) value;
+        return value.intValue();
     }
 
     @Override
     public double evaluate(double x) {
-        return value;
+        return value.doubleValue();
     }
 
     @Override
@@ -28,18 +26,14 @@ public class Const extends Evaluable {
 
     @Override
     public String toString() {
-        if (value % 1 == 0) {
-            return String.valueOf((int)value);
-        } else {
-            return String.valueOf(value);
-        }
+        return String.valueOf(value);
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Const) {
             Const second = (Const) obj;
-            return value == second.value;
+            return Objects.equals(value, second.value);
         } else {
             return false;
         }
@@ -47,6 +41,6 @@ public class Const extends Evaluable {
 
     @Override
     public int hashCode() {
-        return Double.hashCode(value);
+        return Objects.hashCode(value);
     }
 }
