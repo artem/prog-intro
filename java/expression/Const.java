@@ -1,20 +1,38 @@
 package expression;
 
-public class Const implements Expression {
-    private final int value;
+public class Const extends Evaluable {
+    private final double value;
 
     public Const(int value) {
         this.value = value;
     }
 
+    public Const(double value) {
+        this.value = value;
+    }
+
     @Override
     public int evaluate(int x) {
+        return (int) value;
+    }
+
+    @Override
+    public double evaluate(double x) {
         return value;
     }
 
     @Override
+    public int evaluate(int x, int y, int z) {
+        return evaluate(x);
+    }
+
+    @Override
     public String toString() {
-        return String.valueOf(value);
+        if (value % 1 == 0) {
+            return String.valueOf((int)value);
+        } else {
+            return String.valueOf(value);
+        }
     }
 
     @Override
@@ -29,6 +47,6 @@ public class Const implements Expression {
 
     @Override
     public int hashCode() {
-        return Integer.hashCode(value);
+        return Double.hashCode(value);
     }
 }

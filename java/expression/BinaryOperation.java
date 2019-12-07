@@ -2,11 +2,11 @@ package expression;
 
 import java.util.Objects;
 
-public abstract class BinaryOperation implements Expression {
-    protected final Expression arg1;
-    protected final Expression arg2;
+public abstract class BinaryOperation extends Evaluable {
+    protected final Evaluable arg1;
+    protected final Evaluable arg2;
 
-    protected BinaryOperation(Expression arg1, Expression arg2) {
+    protected BinaryOperation(Evaluable arg1, Evaluable arg2) {
         this.arg1 = arg1;
         this.arg2 = arg2;
     }
