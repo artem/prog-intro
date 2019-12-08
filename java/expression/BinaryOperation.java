@@ -2,13 +2,18 @@ package expression;
 
 import java.util.Objects;
 
-public abstract class BinaryOperation extends CommonExpression {
+public abstract class BinaryOperation implements CommonExpression {
     protected final CommonExpression arg1;
     protected final CommonExpression arg2;
 
     protected BinaryOperation(CommonExpression arg1, CommonExpression arg2) {
         this.arg1 = arg1;
         this.arg2 = arg2;
+    }
+
+    @Override
+    public int evaluate(int x) {
+        return evaluate(x, 0, 0);
     }
 
     @Override
