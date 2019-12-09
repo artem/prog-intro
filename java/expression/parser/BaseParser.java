@@ -1,5 +1,7 @@
 package expression.parser;
 
+import expression.Const;
+
 /**
  * @author Georgiy Korneev (kgeorgiy@kgeorgiy.info)
  */
@@ -34,6 +36,40 @@ public abstract class BaseParser {
     protected void expect(final String value) {
         for (char c : value.toCharArray()) {
             expect(c);
+        }
+    }
+
+    protected Const parseNumber() {
+        final StringBuilder sb = new StringBuilder();
+        copyInteger(sb);
+
+        try {
+            return new Const(Long.parseLong(sb.toString()));
+        } catch (NumberFormatException e) {
+            throw error("Invalid number " + sb);
+        }
+    }
+
+    private void copyDigits(final StringBuilder sb) {
+        while (between('0', '9')) {
+            sb.append(ch);
+            nextChar();
+        }
+    }
+
+    private void copyInteger(final StringBuilder sb) {
+        if (test('0')) {
+            sb.append('0');
+        } else if (between('1', '9')) {
+            copyDigits(sb);
+        } else {
+            throw error("Invalid number");
+        }
+    }
+
+    protected void skipWhitespace() {
+        while (test(' ') || test('\t')) {
+            // skip
         }
     }
 

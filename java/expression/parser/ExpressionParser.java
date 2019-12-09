@@ -2,6 +2,8 @@ package expression.parser;
 
 import expression.*;
 
+import java.util.List;
+
 public class ExpressionParser implements Parser {
     @Override
     public CommonExpression parse(final String source) {
@@ -18,90 +20,62 @@ public class ExpressionParser implements Parser {
         }
 
         public CommonExpression parse() {
-            return parse(false);
-        }
-
-        private CommonExpression parse(boolean nested) {
-            CommonExpression ret = parseElement();
-
-            while ((nested && !test(')')) || (!nested && !test('\0')) ) {
-                ret = parseOperation(ret);
-            }
+            CommonExpression ret = parseOperand();
+            expect('\0');
 
             return ret;
         }
 
-        private CommonExpression parseOperation(CommonExpression ret) {
-            if (test('+')) {
-                return new Add(ret, parseElement());
-            } else if (test('-')) {
-                return new Subtract(ret, parseElement());
-            } else if (test('*')) {
-                return new Multiply(ret, parseElement());
-            } else if (test('/')) {
-                return new Divide(ret, parseElement());
-            } else {
-                throw error("Unsupported operation!");
+        private CommonExpression parseOperand() {
+            return parseAddSub();
+        }
+
+        private CommonExpression parseAddSub() {
+            CommonExpression left = parseMulDiv();
+
+            while (true) {
+                skipWhitespace();
+                if (test('+')) {
+                    left = new Add(left, parseMulDiv());
+                } else if (test('-')) {
+                    left = new Subtract(left, parseMulDiv());
+                } else {
+                    return left;
+                }
             }
         }
 
-        private CommonExpression parseElement() {
-            CommonExpression ret;
-            skipWhitespace();
-            ret = parseValue();
-            skipWhitespace();
-            return ret;
+        private CommonExpression parseMulDiv() {
+            CommonExpression left = parseValue();
+
+            while (true) {
+                skipWhitespace();
+                if (test('*')) {
+                    left =  new Multiply(left, parseValue());
+                } else if (test('/')) {
+                    left = new Divide(left, parseValue());
+                } else {
+                    return left;
+                }
+            }
         }
 
         private CommonExpression parseValue() {
+            skipWhitespace();
+
             if (test('(')) {
-                return parse(true);
-            } else if (test('x')) {
-                return new Variable("x");
-            } else if (test('y')) {
-                return new Variable("y");
-            } else if (test('z')) {
-                return new Variable("z");
+                CommonExpression tmp = parseOperand();
+                expect(')');
+                return tmp;
+            } else if (test('-')) {
+                return new Negate(parseValue());
             } else {
+                for (char var : List.of('x', 'y', 'z')) {
+                    if (test(var)) {
+                        return new Variable(String.valueOf(var));
+                    }
+                }
                 return parseNumber();
-            }
-        }
-
-        private Const parseNumber() {
-            final StringBuilder sb = new StringBuilder();
-            copyInteger(sb);
-
-            try {
-                return new Const(Integer.parseInt(sb.toString()));
-            } catch (NumberFormatException e) {
-                throw error("Invalid number " + sb);
-            }
-        }
-
-        private void copyDigits(final StringBuilder sb) {
-            while (between('0', '9')) {
-                sb.append(ch);
-                nextChar();
-            }
-        }
-
-        private void copyInteger(final StringBuilder sb) {
-            if (test('-')) {
-                sb.append('-');
-                skipWhitespace();
-            }
-            if (test('0')) {
-                sb.append('0');
-            } else if (between('1', '9')) {
-                copyDigits(sb);
-            } else {
-                throw error("Invalid number");
-            }
-        }
-
-        private void skipWhitespace() {
-            while (test(' ')) {
-                // skip
             }
         }
     }

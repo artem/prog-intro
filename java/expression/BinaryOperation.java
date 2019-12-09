@@ -2,18 +2,12 @@ package expression;
 
 import java.util.Objects;
 
-public abstract class BinaryOperation implements CommonExpression {
-    protected final CommonExpression arg1;
+public abstract class BinaryOperation extends UnaryOperation {
     protected final CommonExpression arg2;
 
     protected BinaryOperation(CommonExpression arg1, CommonExpression arg2) {
-        this.arg1 = arg1;
+        super(arg1);
         this.arg2 = arg2;
-    }
-
-    @Override
-    public int evaluate(int x) {
-        return evaluate(x, 0, 0);
     }
 
     @Override
@@ -25,7 +19,7 @@ public abstract class BinaryOperation implements CommonExpression {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof BinaryOperation) {
+        if (obj != null && getClass() == obj.getClass()) {
             BinaryOperation second = (BinaryOperation) obj;
             return Objects.equals(arg1, second.arg1) && Objects.equals(arg2, second.arg2)
                     && Objects.equals(getOperation(), second.getOperation());
@@ -36,8 +30,6 @@ public abstract class BinaryOperation implements CommonExpression {
 
     @Override
     public int hashCode() {
-        return (Objects.hashCode(arg1) * 31 + Objects.hashCode(arg2)) * 31 + Objects.hashCode(getOperation());
+        return super.hashCode() * 31 + Objects.hashCode(arg2);
     }
-
-    protected abstract String getOperation();
 }
