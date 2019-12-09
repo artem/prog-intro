@@ -25,7 +25,7 @@ public abstract class UnaryOperation implements CommonExpression {
     public boolean equals(Object obj) {
         if (obj != null && getClass() == obj.getClass()) {
             UnaryOperation second = (UnaryOperation) obj;
-            return Objects.equals(arg1, second.arg1) && Objects.equals(getOperation(), second.getOperation());
+            return Objects.equals(arg1, second.arg1);
         } else {
             return false;
         }

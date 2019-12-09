@@ -21,8 +21,7 @@ public abstract class BinaryOperation extends UnaryOperation {
     public boolean equals(Object obj) {
         if (obj != null && getClass() == obj.getClass()) {
             BinaryOperation second = (BinaryOperation) obj;
-            return Objects.equals(arg1, second.arg1) && Objects.equals(arg2, second.arg2)
-                    && Objects.equals(getOperation(), second.getOperation());
+            return Objects.equals(arg1, second.arg1) && Objects.equals(arg2, second.arg2);
         } else {
             return false;
         }
