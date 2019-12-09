@@ -2,8 +2,6 @@ package expression.parser;
 
 import expression.*;
 
-import java.util.List;
-
 public class ExpressionParser implements Parser {
     @Override
     public CommonExpression parse(final String source) {
@@ -17,13 +15,10 @@ public class ExpressionParser implements Parser {
     private static class InternalParser extends BaseParser {
         protected InternalParser(ExpressionSource source) {
             super(source);
-            nextChar();
         }
 
         public CommonExpression parse() {
-            CommonExpression ret = parse(false);
-            //System.err.println(ret);
-            return ret;
+            return parse(false);
         }
 
         private CommonExpression parse(boolean nested) {

@@ -9,6 +9,7 @@ public abstract class BaseParser {
 
     protected BaseParser(final ExpressionSource source) {
         this.source = source;
+        nextChar();
     }
 
     protected void nextChar() {
