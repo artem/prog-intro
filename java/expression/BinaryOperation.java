@@ -2,11 +2,12 @@ package expression;
 
 import java.util.Objects;
 
-public abstract class BinaryOperation extends UnaryOperation {
+public abstract class BinaryOperation extends Operation {
+    protected final CommonExpression arg1;
     protected final CommonExpression arg2;
 
     protected BinaryOperation(CommonExpression arg1, CommonExpression arg2) {
-        super(arg1);
+        this.arg1 = arg1;
         this.arg2 = arg2;
     }
 

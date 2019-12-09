@@ -2,16 +2,11 @@ package expression;
 
 import java.util.Objects;
 
-public abstract class UnaryOperation implements CommonExpression {
+public abstract class UnaryOperation extends Operation {
     protected final CommonExpression arg1;
 
     protected UnaryOperation(CommonExpression arg1) {
         this.arg1 = arg1;
-    }
-
-    @Override
-    public int evaluate(int x) {
-        return evaluate(x, 0, 0);
     }
 
     @Override
@@ -35,6 +30,4 @@ public abstract class UnaryOperation implements CommonExpression {
     public int hashCode() {
         return Objects.hashCode(arg1) * 31 + Objects.hashCode(getOperation());
     }
-
-    protected abstract String getOperation();
 }
