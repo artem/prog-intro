@@ -27,7 +27,24 @@ public class ExpressionParser implements Parser {
         }
 
         private CommonExpression parseOperand() {
-            return parseAddSub();
+            return parseBitwiseShift();
+        }
+
+        private CommonExpression parseBitwiseShift() {
+            CommonExpression left = parseAddSub();
+
+            while (true) {
+                skipWhitespace();
+                if (test('<')) {
+                    expect('<');
+                    left = new LeftShift(left, parseAddSub());
+                } else if (test('>')) {
+                    expect('>');
+                    left = new RightShift(left, parseAddSub());
+                } else {
+                    return left;
+                }
+            }
         }
 
         private CommonExpression parseAddSub() {
