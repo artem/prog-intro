@@ -1,7 +1,7 @@
 package expression;
 
 public class Multiply extends BinaryOperation {
-    protected Multiply(CommonExpression arg1, CommonExpression arg2) {
+    public Multiply(CommonExpression arg1, CommonExpression arg2) {
         super(arg1, arg2);
     }
 

@@ -1,7 +1,7 @@
 package expression;
 
 public class Subtract extends BinaryOperation {
-    protected Subtract(CommonExpression arg1, CommonExpression arg2) {
+    public Subtract(CommonExpression arg1, CommonExpression arg2) {
         super(arg1, arg2);
     }
 
