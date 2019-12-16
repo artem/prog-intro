@@ -2,7 +2,7 @@ package expression;
 
 import java.util.Objects;
 
-public class Const implements CommonExpression {
+public final class Const implements CommonExpression {
     private final Number value;
 
     public Const(Number value) {
@@ -31,7 +31,7 @@ public class Const implements CommonExpression {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj != null && getClass() == obj.getClass()) {
+        if (obj instanceof Const) {
             Const second = (Const) obj;
             return Objects.equals(value, second.value);
         } else {

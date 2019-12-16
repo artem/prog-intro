@@ -3,7 +3,7 @@ package expression;
 import java.util.Objects;
 
 public abstract class UnaryOperation extends Operation {
-    protected final CommonExpression arg1;
+    private final CommonExpression arg1;
 
     protected UnaryOperation(CommonExpression arg1) {
         this.arg1 = arg1;
@@ -11,9 +11,7 @@ public abstract class UnaryOperation extends Operation {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getOperation()).append(arg1);
-        return sb.toString();
+        return getOperation() + arg1;
     }
 
     @Override

@@ -3,8 +3,8 @@ package expression;
 import java.util.Objects;
 
 public abstract class BinaryOperation extends Operation {
-    protected final CommonExpression arg1;
-    protected final CommonExpression arg2;
+    private final CommonExpression arg1;
+    private final CommonExpression arg2;
 
     protected BinaryOperation(CommonExpression arg1, CommonExpression arg2) {
         this.arg1 = arg1;
@@ -13,9 +13,7 @@ public abstract class BinaryOperation extends Operation {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append('(').append(arg1).append(' ').append(getOperation()).append(' ').append(arg2).append(')');
-        return sb.toString();
+        return "(" + arg1 + ' ' + getOperation() + ' ' + arg2 + ')';
     }
 
     @Override
@@ -30,7 +28,7 @@ public abstract class BinaryOperation extends Operation {
 
     @Override
     public int hashCode() {
-        return (Objects.hashCode(arg1) * 31 + Objects.hashCode(arg2)) * 31 + Objects.hashCode(getClass());
+        return Objects.hash(arg1, arg2, getClass());
     }
 
     @Override

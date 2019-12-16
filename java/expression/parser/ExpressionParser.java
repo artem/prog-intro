@@ -68,7 +68,7 @@ public class ExpressionParser implements Parser {
             while (true) {
                 skipWhitespace();
                 if (test('*')) {
-                    left =  new Multiply(left, parseValue());
+                    left = new Multiply(left, parseValue());
                 } else if (test('/')) {
                     left = new Divide(left, parseValue());
                 } else {
@@ -87,6 +87,7 @@ public class ExpressionParser implements Parser {
             } else if (test('-')) {
                 return new Negate(parseValue());
             } else {
+                // Что-то про Set<Character> и "xyz".indexOf() . . .
                 for (char var : List.of('x', 'y', 'z')) {
                     if (test(var)) {
                         return new Variable(String.valueOf(var));
