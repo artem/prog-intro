@@ -30,6 +30,6 @@ public abstract class BinaryOperation extends Operation {
 
     @Override
     public int hashCode() {
-        return super.hashCode() * 31 + Objects.hashCode(arg2);
+        return (Objects.hashCode(arg1) * 31 + Objects.hashCode(arg2)) * 31 + Objects.hashCode(getClass());
     }
 }
