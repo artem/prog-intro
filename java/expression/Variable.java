@@ -40,7 +40,7 @@ public class Variable implements CommonExpression {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Variable) {
+        if (obj != null && getClass() == obj.getClass()) {
             Variable second = (Variable) obj;
             return Objects.equals(variable, second.variable);
         } else {

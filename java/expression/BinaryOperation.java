@@ -32,4 +32,17 @@ public abstract class BinaryOperation extends Operation {
     public int hashCode() {
         return (Objects.hashCode(arg1) * 31 + Objects.hashCode(arg2)) * 31 + Objects.hashCode(getClass());
     }
+
+    @Override
+    public int evaluate(int x, int y, int z) {
+        return calculate(arg1.evaluate(x, y, z), arg2.evaluate(x, y, z));
+    }
+
+    @Override
+    public double evaluate(double x) {
+        return calculate(arg1.evaluate(x), arg2.evaluate(x));
+    }
+
+    protected abstract double calculate(double a, double b);
+    protected abstract int calculate(int a, int b);
 }

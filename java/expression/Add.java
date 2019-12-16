@@ -6,13 +6,13 @@ public class Add extends BinaryOperation {
     }
 
     @Override
-    public int evaluate(int x, int y, int z) {
-        return arg1.evaluate(x, y, z) + arg2.evaluate(x, y, z);
+    protected double calculate(double a, double b) {
+        return a + b;
     }
 
     @Override
-    public double evaluate(double x) {
-        return arg1.evaluate(x) + arg2.evaluate(x);
+    protected int calculate(int a, int b) {
+        return a + b;
     }
 
     @Override

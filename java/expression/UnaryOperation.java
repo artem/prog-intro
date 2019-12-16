@@ -28,6 +28,19 @@ public abstract class UnaryOperation extends Operation {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(arg1) * 31 + Objects.hashCode(getOperation());
+        return Objects.hashCode(arg1) * 31 + Objects.hashCode(getClass());
     }
+
+    @Override
+    public int evaluate(int x, int y, int z) {
+        return calculate(arg1.evaluate(x, y, z));
+    }
+
+    @Override
+    public double evaluate(double x) {
+        return calculate(arg1.evaluate(x));
+    }
+
+    protected abstract double calculate(double a);
+    protected abstract int calculate(int a);
 }

@@ -31,7 +31,7 @@ public class Const implements CommonExpression {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Const) {
+        if (obj != null && getClass() == obj.getClass()) {
             Const second = (Const) obj;
             return Objects.equals(value, second.value);
         } else {

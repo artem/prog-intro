@@ -6,13 +6,13 @@ public class RightShift extends BinaryOperation {
     }
 
     @Override
-    public int evaluate(int x, int y, int z) {
-        return arg1.evaluate(x, y, z) >> arg2.evaluate(x, y, z);
+    protected double calculate(double a, double b) {
+        throw new IllegalArgumentException("Bitwise shift is not defined for double");
     }
 
     @Override
-    public double evaluate(double x) {
-        throw new IllegalArgumentException("Bitwise shift is not defined for double");
+    public int calculate(int a, int b) {
+        return a >> b;
     }
 
     @Override
