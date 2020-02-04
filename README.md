@@ -2,6 +2,20 @@
 
 [Условия домашних заданий](http://www.kgeorgiy.info/courses/prog-intro/homeworks.html)
 
+## Домашнее задание 13. Обработка ошибок
+
+Модификации
+ * *Базовая*
+    * Класс `ExpressionParser` должен реализовывать интерфейс
+        [Parser](java/expression/exceptions/Parser.java)
+    * Классы `CheckedAdd`, `CheckedSubtract`, `CheckedMultiply`,
+        `CheckedDivide` и `CheckedNegate` должны реализовывать интерфейс
+        [TripleExpression](java/expression/TripleExpression.java)
+    * Нельзя использовать типы `long` и `double`
+    * Нельзя использовать методы классов `Math` и `StrictMath`
+    * [Исходный код тестов](java/expression/exceptions/ExceptionsTest.java)
+
+
 ## Домашнее задание 12. Разбор выражений
 
 Модификации
@@ -16,6 +30,18 @@
         * `<<` – сдвиг влево, минимальный приоритет (`1 << 5 + 3` равно `1 << (5 + 3)` равно 256);
         * `>>` – сдвиг вправо, минимальный приоритет (`1024 >> 5 + 3` равно `1024 >> (5 + 3)` равно 4);
     * [Исходный код тестов](java/expression/parser/ParserShiftsTest.java)
+ * *ReverseDigits*
+    * Реализуйте операции из модификации *Shifts*.
+    * Дополнительно реализуйте унарные операции (приоритет как у унарного минуса):
+        * `reverse` – число с переставленными цифрами, `reverse -12345` равно -54321;
+        * `digits` – сумма цифр числа, `digits -12345` равно 15.
+    * [Исходный код тестов](java/expression/parser/ParserReverseDigitsTest.java)
+ * *Abs*
+    * Реализуйте операции из модификации *Shifts*.
+    * Дополнительно реализуйте унарные операции (приоритет как у унарного минуса):
+        * `abs` – модуль числа, `abs -5` равно 5;
+        * `square` – возведение в квадрат, `square -5` равно 25.
+    * [Исходный код тестов](java/expression/parser/ParserAbsSquareTest.java)
 
 
 ## Домашнее задание 11. Выражения
