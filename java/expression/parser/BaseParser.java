@@ -1,6 +1,7 @@
 package expression.parser;
 
 import expression.Const;
+import expression.exceptions.ParserException;
 
 /**
  * @author Georgiy Korneev (kgeorgiy@kgeorgiy.info)
@@ -28,7 +29,8 @@ public abstract class BaseParser {
 
     protected void expect(final char c) {
         if (ch != c) {
-            throw error("Expected '" + c + "', found '" + ch + "'");
+            String expect = c == 0 ? "end of expression" : "'" + c + "'";
+            throw error("Expected " + expect + ", found '" + ch + "'");
         }
         nextChar();
     }
@@ -39,12 +41,12 @@ public abstract class BaseParser {
         }
     }
 
-    protected Const parseNumber() {
-        final StringBuilder sb = new StringBuilder();
+    protected Const parseNumber(boolean positive) {
+        final StringBuilder sb = new StringBuilder(positive ? "" : "-");
         copyInteger(sb);
 
         try {
-            return new Const(Long.parseLong(sb.toString()));
+            return new Const(Integer.parseInt(sb.toString()));
         } catch (NumberFormatException e) {
             throw error("Invalid number " + sb);
         }
@@ -60,10 +62,10 @@ public abstract class BaseParser {
     private void copyInteger(final StringBuilder sb) {
         if (test('0')) {
             sb.append('0');
-        } else if (between('1', '9')) {
+        } else if (between('0', '9')) {
             copyDigits(sb);
         } else {
-            throw error("Invalid number");
+            throw error("Number is invalid or missing");
         }
     }
 
@@ -73,7 +75,7 @@ public abstract class BaseParser {
         }
     }
 
-    protected ExpressionException error(final String message) {
+    protected ParserException error(final String message) {
         return source.error(message);
     }
 

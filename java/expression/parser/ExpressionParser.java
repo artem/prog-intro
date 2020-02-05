@@ -1,6 +1,7 @@
 package expression.parser;
 
 import expression.*;
+import expression.exceptions.*;
 
 import java.util.List;
 
@@ -53,9 +54,9 @@ public class ExpressionParser implements Parser {
             while (true) {
                 skipWhitespace();
                 if (test('+')) {
-                    left = new Add(left, parseMulDiv());
+                    left = new CheckedAdd(left, parseMulDiv());
                 } else if (test('-')) {
-                    left = new Subtract(left, parseMulDiv());
+                    left = new CheckedSubtract(left, parseMulDiv());
                 } else {
                     return left;
                 }
@@ -68,9 +69,9 @@ public class ExpressionParser implements Parser {
             while (true) {
                 skipWhitespace();
                 if (test('*')) {
-                    left = new Multiply(left, parseValue());
+                    left = new CheckedMultiply(left, parseValue());
                 } else if (test('/')) {
-                    left = new Divide(left, parseValue());
+                    left = new CheckedDivide(left, parseValue());
                 } else {
                     return left;
                 }
@@ -85,7 +86,11 @@ public class ExpressionParser implements Parser {
                 expect(')');
                 return tmp;
             } else if (test('-')) {
-                return new Negate(parseValue());
+                if (between('0', '9')) {
+                    return parseNumber(false);
+                } else {
+                    return new Negate(parseValue());
+                }
             } else {
                 // Что-то про Set<Character> и "xyz".indexOf() . . .
                 for (char var : List.of('x', 'y', 'z')) {
@@ -93,7 +98,8 @@ public class ExpressionParser implements Parser {
                         return new Variable(String.valueOf(var));
                     }
                 }
-                return parseNumber();
+
+                return parseNumber(true);
             }
         }
     }

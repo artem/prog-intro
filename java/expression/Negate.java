@@ -6,12 +6,12 @@ public class Negate extends UnaryOperation {
     }
 
     @Override
-    public int calculate(int a) {
+    protected int calculate(int a) {
         return -a;
     }
 
     @Override
-    public double calculate(double a) {
+    protected double calculate(double a) {
         return -a;
     }
 

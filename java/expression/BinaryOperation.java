@@ -13,7 +13,7 @@ public abstract class BinaryOperation extends Operation {
 
     @Override
     public String toString() {
-        return "(" + arg1 + ' ' + getOperation() + ' ' + arg2 + ')';
+        return "(" + arg1 + " " + getOperation() + " " + arg2 + ")";
     }
 
     @Override
