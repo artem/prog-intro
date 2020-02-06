@@ -10,7 +10,7 @@ public class CheckedNegate extends expression.Negate {
     @Override
     protected int calculate(int a) {
         if (a == Integer.MIN_VALUE) {
-            throw new OverflowException(this);
+            throw new UnderflowException(this);
         }
         return super.calculate(a);
     }

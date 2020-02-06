@@ -2,16 +2,17 @@ package expression.parser;
 
 import expression.*;
 import expression.exceptions.*;
+import expression.exceptions.IllegalArgumentException;
 
 import java.util.List;
 
-public class ExpressionParser implements Parser {
+public class ExpressionParser implements expression.exceptions.Parser {
     @Override
-    public CommonExpression parse(final String source) {
+    public CommonExpression parse(final String source) throws ParserException {
         return parse(new StringSource(source));
     }
 
-    private CommonExpression parse(StringSource expression) {
+    private CommonExpression parse(StringSource expression) throws ParserException {
         return new InternalParser(expression).parse();
     }
 
@@ -20,18 +21,18 @@ public class ExpressionParser implements Parser {
             super(source);
         }
 
-        public CommonExpression parse() {
+        public CommonExpression parse() throws ParserException {
             CommonExpression ret = parseOperand();
             expect('\0');
 
             return ret;
         }
 
-        private CommonExpression parseOperand() {
+        private CommonExpression parseOperand() throws ParserException {
             return parseBitwiseShift();
         }
 
-        private CommonExpression parseBitwiseShift() {
+        private CommonExpression parseBitwiseShift() throws ParserException {
             CommonExpression left = parseAddSub();
 
             while (true) {
@@ -48,7 +49,7 @@ public class ExpressionParser implements Parser {
             }
         }
 
-        private CommonExpression parseAddSub() {
+        private CommonExpression parseAddSub() throws ParserException {
             CommonExpression left = parseMulDiv();
 
             while (true) {
@@ -63,7 +64,7 @@ public class ExpressionParser implements Parser {
             }
         }
 
-        private CommonExpression parseMulDiv() {
+        private CommonExpression parseMulDiv() throws ParserException {
             CommonExpression left = parseValue();
 
             while (true) {
@@ -78,7 +79,7 @@ public class ExpressionParser implements Parser {
             }
         }
 
-        private CommonExpression parseValue() {
+        private CommonExpression parseValue() throws ParserException{
             skipWhitespace();
 
             if (test('(')) {
@@ -91,6 +92,8 @@ public class ExpressionParser implements Parser {
                 } else {
                     return new Negate(parseValue());
                 }
+            } else if (between('0', '9')) {
+                return parseNumber(true);
             } else {
                 // Что-то про Set<Character> и "xyz".indexOf() . . .
                 for (char var : List.of('x', 'y', 'z')) {
@@ -99,7 +102,8 @@ public class ExpressionParser implements Parser {
                     }
                 }
 
-                return parseNumber(true);
+                ParserException e = error("Invalid variable name");
+                throw new IllegalArgumentException(e.getMessage(), e.getPrefix(), e.getPos());
             }
         }
     }

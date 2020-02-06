@@ -1,6 +1,7 @@
 package expression.parser;
 
 import expression.Const;
+import expression.exceptions.MissingParenthesisException;
 import expression.exceptions.ParserException;
 
 /**
@@ -27,28 +28,35 @@ public abstract class BaseParser {
         return false;
     }
 
-    protected void expect(final char c) {
+    protected void expect(final char c) throws ParserException {
         if (ch != c) {
+            if (c == ')') {
+                ParserException e = error("Unopened parenthesis");
+                throw new MissingParenthesisException(e.getMessage(), e.getPrefix(), e.getPos());
+            } else if (ch == ')') {
+                ParserException e = error("Unclosed parenthesis");
+                throw new MissingParenthesisException(e.getMessage(), e.getPrefix(), e.getPos());
+            }
             String expect = c == 0 ? "end of expression" : "'" + c + "'";
             throw error("Expected " + expect + ", found '" + ch + "'");
         }
         nextChar();
     }
 
-    protected void expect(final String value) {
+    protected void expect(final String value) throws ParserException {
         for (char c : value.toCharArray()) {
             expect(c);
         }
     }
 
-    protected Const parseNumber(boolean positive) {
+    protected Const parseNumber(boolean positive) throws ParserException {
         final StringBuilder sb = new StringBuilder(positive ? "" : "-");
         copyInteger(sb);
 
         try {
             return new Const(Integer.parseInt(sb.toString()));
         } catch (NumberFormatException e) {
-            throw error("Invalid number " + sb);
+            throw error("Const integer overflow: " + sb);
         }
     }
 
@@ -59,13 +67,14 @@ public abstract class BaseParser {
         }
     }
 
-    private void copyInteger(final StringBuilder sb) {
+    private void copyInteger(final StringBuilder sb) throws ParserException {
         if (test('0')) {
             sb.append('0');
         } else if (between('0', '9')) {
             copyDigits(sb);
         } else {
-            throw error("Number is invalid or missing");
+            ParserException e = error("Const integer overflow");
+            throw new MissingParenthesisException(e.getMessage(), e.getPrefix(), e.getPos());
         }
     }
 

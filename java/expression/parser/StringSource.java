@@ -25,6 +25,6 @@ public class StringSource implements ExpressionSource {
 
     @Override
     public ParserException error(final String message) {
-        return new ParserException(message, pos);
+        return new ParserException(message, data.substring(0, pos), pos);
     }
 }
